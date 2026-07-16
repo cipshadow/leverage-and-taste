@@ -190,7 +190,7 @@ Consistent across all 6 styles:
 
 ```
 violet:    #6366F1   (primary accent)
-violetHi:  #8B85FF   (highlight)
+violetHi:  #818CF8   (highlight)
 orange:    #FF5A00   (emphasis, trends)
 green:     #34D399   (positive)
 blue:      #3B9EFF   (secondary)

@@ -10,10 +10,10 @@ This repo mirrors a live `~/.claude/` setup, minus everything personal. Sync is 
 4. Before committing, run the leak check:
 
 ```bash
-grep -riE 'stripe|hubble|blurple|/Users/[a-z]+|<your-employer>|<your-projects>' commands/ templates/ hooks/ docs/ README.md AGENTS.md
+grep -riE '<employer>|<internal-tool>|<brand-term>|/Users/[a-z]+' commands/ templates/ hooks/ docs/ README.md AGENTS.md
 ```
 
-Adapt the pattern list to your own employer, project names, and paths. Zero hits or no commit.
+Replace the placeholders with your actual employer name, internal tool names, brand terms, project names, and paths — keep the real list somewhere private, not in this file. Zero hits or no commit.
 
 ## The manifest
 

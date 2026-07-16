@@ -199,7 +199,7 @@ After the sentence-level pass, re-read the doc as a reader would, focusing on pa
 - Fix: recast as "a principle: infrastructure that..." (state the thing, not the act of doing the thing).
 
 **Table subject/voice consistency across tables:**
-- Flag when different tables in the same doc use different subject patterns. E.g. one wins table uses third person ("The new checkout reaches...") while another uses first person ("We launched saved payment methods...").
+- Flag when different tables in the same doc use different subject patterns. E.g. one wins table uses third person ("The new onboarding flow reaches...") while another uses first person ("We launched saved searches...").
 - Fix: suggest standardizing to "We [past tense]" across all wins tables — the strongest pattern in exemplary strategy docs.
 
 **Duplicate words from editing:**
