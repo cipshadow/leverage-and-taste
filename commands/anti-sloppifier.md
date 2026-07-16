@@ -227,7 +227,7 @@ Keep the whole file under ~80 lines. It's a dashboard, not a second diary: count
 Template for first creation:
 
 ```markdown
-# Diary Trends — long-term AI-use analysis
+# Diary Trends: long-term AI-use analysis
 
 Maintained by /anti-sloppifier. diary.md holds raw entries; this file holds patterns.
 

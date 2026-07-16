@@ -4,7 +4,7 @@ Automate the legwork, enhance your taste.
 
 ---
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for product managers and knowledge workers: 12 slash commands, an operating-rules "constitution", and a session-continuity system that makes the 50th conversation more useful than the first.
+A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for product managers and knowledge workers: 13 slash commands, an operating-rules "constitution", and a session-continuity system that makes the 50th conversation more useful than the first.
 
 Everything here is in daily use by its author: nothing aspirational, nothing invented for the repo. Assembled over months of real PM work (strategy docs, editorial reviews, meeting notes, feedback synthesis), drawing on Dan Shipper / Every's AI workflow principles and Claude Code community patterns.
 
@@ -151,6 +151,7 @@ This pairs well with Every's editorial reviewer skills (hemingway, dev-edit, pan
 | `/pretty-slides`   | Polished single-file HTML slide decks in 6 visual styles, from a doc, URL, or pasted content.                                |
 | `/slackify`        | Makes text cleanly pastable into Slack (strips artificial line breaks, fixes formatting).                                    |
 | `/tidy`            | Points at a folder: renames vague files, finds duplicates and accidental secrets, proposes fixes, executes only on approval. |
+| `/context-refresh` | Weekly upkeep for a hub-and-spoke context folder (`CLAUDE.md` + `context-map.md` + a root or `_inbox/` drop zone + `INDEX.md` files). Runs `/tidy`'s scan, files anything untriaged, repairs every cross-reference a rename broke, and flags stale or conflicting docs for a human call. Pairs with the `inbox-nudge.sh` hook, which nudges at session start when a watched folder's root has untriaged files. |
 
 ## The operating rules (templates/CLAUDE.md)
 

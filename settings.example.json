@@ -18,6 +18,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/session-log-reader.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/inbox-nudge.sh"
           }
         ]
       }

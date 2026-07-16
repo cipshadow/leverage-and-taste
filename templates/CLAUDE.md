@@ -130,5 +130,5 @@ When a file or document is too large to read, immediately offer concrete workaro
   - A major doc or output was produced that warrants the slop test
 - Skip if the conversation is mid-flow or exploratory; don't interrupt active thinking.
 - At session end, run `/ho` (handoff) to create the structured checkpoint. The anti-sloppifier audit informs the handoff summary.
-- `/anti-sloppifier` also maintains `~/.claude/diary-trends.md` — the long-term dashboard of AI-use patterns (running signals, habit ledger, monthly rollups). When an audit runs, the trends file gets updated too, always. Surface the top running signal when it's relevant to a decision being made in-session.
+- `/anti-sloppifier` also maintains `~/.claude/diary-trends.md`: the long-term dashboard of AI-use patterns (running signals, habit ledger, monthly rollups). When an audit runs, the trends file gets updated too, always. Surface the top running signal when it's relevant to a decision being made in-session.
 

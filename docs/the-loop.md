@@ -22,7 +22,7 @@ Claude Code fires the Stop event whenever Claude finishes responding, not just w
 
 Runs at natural checkpoints (a decision made, a doc produced, roughly every 10 messages) and always as part of `/ho`. It audits the session against the operating rules in `templates/CLAUDE.md`: did AI anchor your thinking, did you abdicate a decision, did slop get through? Findings go to `~/.claude/diary.md`, deliberately separate from the session log: the log records *work done*, the diary records *how AI was used*.
 
-Each audit also rolls up into `~/.claude/diary-trends.md`, a long-term dashboard: recurring signals ranked by count, a ledger of prescribed habits and whether you actually practiced them, and monthly decision-agency tallies. The diary answers "what happened this session"; the trends file answers "what keeps happening" — which is where AI-use discipline is actually won or lost.
+Each audit also rolls up into `~/.claude/diary-trends.md`, a long-term dashboard: recurring signals ranked by count, a ledger of prescribed habits and whether you actually practiced them, and monthly decision-agency tallies. The diary answers "what happened this session"; the trends file answers "what keeps happening," which is where AI-use discipline is actually won or lost.
 
 ## The loop in practice
 
