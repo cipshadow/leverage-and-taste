@@ -20,7 +20,7 @@ Run ALL of the following bash commands **in parallel**. Collect the outputs befo
 ### Bash 1: Stats-cache — model usage and daily activity
 ```bash
 python3 - << 'EOF'
-import json, sys
+import json, os
 from datetime import datetime, timedelta
 
 with open(os.path.expanduser('~/.claude/stats-cache.json')) as f:
@@ -28,6 +28,8 @@ with open(os.path.expanduser('~/.claude/stats-cache.json')) as f:
 
 # Model usage (lifetime totals)
 print("=== MODEL_USAGE ===")
+# CONFIGURE: per-MTok USD pricing. Update as models and prices change —
+# check https://docs.anthropic.com/en/docs/about-claude/pricing
 pricing = {
     'claude-opus-4-6':       {'in': 15, 'out': 75, 'cr': 1.875, 'cc': 18.75},
     'claude-sonnet-4-6':     {'in': 3,  'out': 15, 'cr': 0.375, 'cc': 3.75},
@@ -93,7 +95,7 @@ try:
     print(f"  enableAllProjectMcpServers: {all_proj}")
 except: print("  settings.local.json: error reading")
 
-# Estimate tool count per MCP server — adapt these to your own servers
+# CONFIGURE: estimate tool count per MCP server — add your own servers
 # Format: 'server_name': estimated_tool_count
 server_tool_estimates = {
     # Add your MCP servers here, e.g.:
@@ -114,7 +116,7 @@ print("\n=== CONTEXT_FILES ===")
 context_files = [
     '~/.claude/CLAUDE.md',
     '~/.claude/rules/writing-style.md',
-    # Add your other rules files and memory file if you use them, e.g.:
+    # CONFIGURE: add your other rules files and memory file if you use them, e.g.:
     # '~/.claude/rules/discipline.md',
     # '~/.claude/memory/MEMORY.md',
 ]

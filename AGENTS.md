@@ -6,8 +6,8 @@ This repository is a **template library**, not a live workspace. The files in `t
 
 1. **Commands:** `cp commands/*.md ~/.claude/commands/`
 2. **Hooks:** `mkdir -p ~/.claude/hooks && cp hooks/*.sh ~/.claude/hooks/ && chmod +x ~/.claude/hooks/*.sh`
-3. **Settings:** merge the `hooks` block from `settings.example.json` into the user's `~/.claude/settings.json`. Do not overwrite their existing permissions. The sound commands (`afplay`) are macOS-only; drop them on other platforms.
-4. **Operating rules:** `templates/CLAUDE.md` → `~/.claude/CLAUDE.md`. If the user already has a CLAUDE.md, merge sections rather than overwriting, and walk them through which rules they want. Also copy `templates/rules/writing-style.md` → `~/.claude/rules/`.
+3. **Settings:** if the user has no `~/.claude/settings.json`, copy `settings.example.json` there whole. Otherwise merge the `hooks` block from `settings.example.json` into their existing file — never overwrite their permissions, and validate the result parses (`jq . ~/.claude/settings.json` or equivalent). The sound commands (`afplay`) are macOS-only; drop them on other platforms.
+4. **Operating rules:** `templates/CLAUDE.md` → `~/.claude/CLAUDE.md`. If the user already has a CLAUDE.md, merge sections rather than overwriting, and walk them through which rules they want. Warn them the "Mandatory" section (interview-first, never generate docs from scratch) adds deliberate friction to every task; offer to leave it out initially. Also copy `templates/rules/writing-style.md` → `~/.claude/rules/`.
 5. **Configure:** files containing a `**CONFIGURE:**` marker need user-specific values before they work fully:
    - `commands/go.md` — the user's projects root directory and aliases
    - `commands/style-review.md` — the user's team style guide (generic defaults work meanwhile)
@@ -16,7 +16,7 @@ This repository is a **template library**, not a live workspace. The files in `t
 
 ## Dependencies
 
-- `jq` — required by `hooks/session-log-reader.sh`. Check with `command -v jq`; install via the platform package manager if missing.
+- `jq` — recommended for `hooks/session-log-reader.sh`; without it the hook falls back to plain-text context injection. Offer to install it via the platform package manager.
 - `git` — used by `/ho` pre-flight and the Stop hook (both degrade gracefully without it).
 - No MCP connectors are required by any command.
 

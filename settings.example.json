@@ -9,8 +9,7 @@
       "Bash(git log:*)",
       "Bash(git diff:*)",
       "WebSearch"
-    ],
-    "defaultMode": "acceptEdits"
+    ]
   },
   "hooks": {
     "SessionStart": [

@@ -36,13 +36,18 @@ fi
 
 [ -z "$CONTEXT" ] && exit 0
 
-jq -n \
-  --arg ctx "$CONTEXT" \
-  --arg msg "Session context injected (SESSION_LOG + .session-handoff.md)" \
-  '{
-    "hookSpecificOutput": {
-      "hookEventName": "SessionStart",
-      "additionalContext": $ctx
-    },
-    "systemMessage": $msg
-  }'
+if command -v jq >/dev/null 2>&1; then
+  jq -n \
+    --arg ctx "$CONTEXT" \
+    --arg msg "Session context injected (SESSION_LOG + .session-handoff.md)" \
+    '{
+      "hookSpecificOutput": {
+        "hookEventName": "SessionStart",
+        "additionalContext": $ctx
+      },
+      "systemMessage": $msg
+    }'
+else
+  # No jq: plain stdout from a SessionStart hook is still added as context.
+  printf '%s\n' "$CONTEXT"
+fi

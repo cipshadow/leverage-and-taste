@@ -21,7 +21,7 @@ What ships, what gets sanitized, what never ships. This is the contract; update 
 
 ### Ships as-is
 
-The 15 editorial roundtable commands (`asshole`, `mom`, `hemingway`, `hitchcock`, `sorkin`, `sedaris`, `vonnegut`, `eli5`, `dev-edit`, `line-edit`, `guardrails`, `debate`, `panel`, `every-review`*, `sure`), plus `anti-sloppifier`, `feedback`, `slackify`, `one-pager`, `tidy`*, `templates/rules/writing-style.md`, and both hook scripts.
+The 15 editorial roundtable commands (`asshole`, `mom`, `hemingway`, `hitchcock`, `sorkin`, `sedaris`, `vonnegut`, `eli5`, `dev-edit`, `line-edit`, `guardrails`, `debate`, `panel`, `every-review`*, `sure`), plus `anti-sloppifier`, `slackify`, `one-pager`, `tidy`*, `templates/rules/writing-style.md`, and both hook scripts.
 (*one-line genericization applied; see below.)
 
 ### Ships sanitized
@@ -36,6 +36,7 @@ The 15 editorial roundtable commands (`asshole`, `mom`, `hemingway`, `hitchcock`
 | `every-review.md` | Publication-specific references → generic; mechanics pass points at `/style-review` |
 | `style-review.md` | Full rewrite of an employer-internal style reviewer: skeleton kept, rules replaced with generic defaults + CONFIGURE slots |
 | `tidy.md` | Personal example path → generic |
+| `feedback.md` | In-file command name normalized to `/feedback` (the live copy says `/fb`, but the filename is what defines the command) |
 | `templates/CLAUDE.md` | Personal Learned Preferences (tool-specific one-offs) removed |
 | `settings.example.json` | Permissive modes (`bypassPermissions`) and personal allow-list entries removed; pinned model removed |
 

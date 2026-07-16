@@ -8,7 +8,7 @@ Claude Code forgets everything between sessions. The session system in this repo
 
 When a session starts, this hook walks up from your working directory to the nearest `SESSION_LOG.md` and injects its most recent entry as context. It also injects `.session-handoff.md` if one exists. You start every session already caught up, without pasting anything.
 
-Requires `jq` (it emits the context as JSON for Claude Code's hook protocol).
+Uses `jq` if installed (for Claude Code's structured hook protocol); without it, falls back to plain-text output, which SessionStart hooks also inject.
 
 **2. `/ho` — the deliberate handoff**
 
@@ -16,7 +16,7 @@ At session end, `/ho` runs a pre-flight check for loose ends (temp files worth s
 
 **3. Stop hook — `hooks/session-handoff-writer.sh`**
 
-Every time a session stops, this hook auto-writes a minimal `.session-handoff.md` snapshot (date, directory, git branch, recent commits, uncommitted changes). It's the safety net for sessions that end without a `/ho`: you lose the narrative but keep the state. If `/ho` already wrote a rich handoff in the last minute, the hook leaves it alone.
+Claude Code fires the Stop event whenever Claude finishes responding, not just when you quit. Each time, this hook auto-writes a minimal `.session-handoff.md` snapshot (date, directory, git branch, recent commits, uncommitted changes), skipping if one was written in the last minute. It's the safety net for sessions that end without a `/ho`: you lose the narrative but keep the state.
 
 **4. `/anti-sloppifier` — the discipline audit**
 
@@ -44,7 +44,10 @@ claude                          # session starts in a project directory
 
 ## Conventions that make it work
 
+Honest adoption cost first: the loop assumes each project lives in its own directory (ideally all under one projects root, which is what `/go` scans). If your work is scattered across a desktop of loose files, adopting the loop means adopting that structure too.
+
 - **One `SESSION_LOG.md` per project directory**, at its root. No cross-project catch-all file; the SessionStart hook finds the right log by walking up from wherever you are.
+- **`CONTEXT.md` is optional but useful**: a per-project file with the stable facts (what the project is, key links, current goal, constraints). You create it once; `/go` reads it alongside the log, and `/ho` refreshes it when things change. The log is the diary, CONTEXT.md is the profile.
 - **Entries are newest-last** and dated `### YYYY-MM-DD`. A second `/ho` on the same day replaces that day's entry instead of duplicating it.
 - **Add `SESSION_LOG.md` and `.session-handoff.md` to `.gitignore`** in repos where session history shouldn't be published (this repo does).
 - **The log stays work-only.** Audit findings, coaching observations, and AI-use feedback go to the diary, never the log.

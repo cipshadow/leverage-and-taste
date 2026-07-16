@@ -3,9 +3,11 @@
 
 OUTFILE="$(pwd)/.session-handoff.md"
 
+# Skip if a snapshot was written in the last 60 seconds (avoids churn when
+# the Stop event fires several times in quick succession).
 if [ -f "$OUTFILE" ]; then
   AGE=$(( $(date +%s) - $(date -r "$OUTFILE" +%s) ))
-  if [ "$AGE" -lt 60 ] && grep -q "What we did:" "$OUTFILE" 2>/dev/null; then
+  if [ "$AGE" -lt 60 ]; then
     exit 0
   fi
 fi

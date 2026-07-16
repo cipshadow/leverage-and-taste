@@ -4,7 +4,7 @@ argument-hint: <paste feedback, URL, or subcommand: search/themes/user/recent/st
 user-invocable: true
 ---
 
-# /fb — User Feedback Extraction & Storage
+# /feedback — User Feedback Extraction & Storage
 
 Extract user or customer feedback into a structured markdown database, or query existing entries.
 
@@ -79,19 +79,19 @@ Save this? (yes / edit / skip)
 
 ## Query mode
 
-### `/fb search <term>`
+### `/feedback search <term>`
 Search across all columns. Present matching rows as a readable list.
 
-### `/fb themes [area]`
+### `/feedback themes [area]`
 Group by Area or Problem patterns. For each theme: count, sentiment breakdown, representative verbatim.
 
-### `/fb user <name>`
+### `/feedback user <name>`
 Find all entries where Company or User matches. Present chronologically.
 
-### `/fb recent [N]`
+### `/feedback recent [N]`
 Show the N most recent entries (default 10) with Problem and Verbatim.
 
-### `/fb stats`
+### `/feedback stats`
 Summary table: total entries, breakdown by area, severity, sentiment.
 
 ---

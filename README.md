@@ -19,14 +19,27 @@ This setup does two things:
 1. **Frees up your time** by automating repetitive knowledge work (session handoffs, feedback extraction, doc reviews, meeting notes).
 2. **Keeps you sharp** with 22 operating rules — and an auditor command that checks whether you're following them — so you don't go passive: accepting the first draft, skipping the hard thinking, letting AI make choices you should be making.
 
-## Quick start (5 minutes)
+## Quick start
 
-Prerequisites: Claude Code installed, `git`, and `jq` (used by one hook: `brew install jq`).
+Prerequisites: [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and working, plus `git`.
+
+### The easy way (recommended)
+
+Let Claude do its own installation. Clone the repo, open Claude Code inside it, and say:
 
 ```bash
 git clone https://github.com/cipshadow/leverage-and-taste.git
 cd leverage-and-taste
+claude
+```
 
+> Install this setup for me, following AGENTS.md. Ask me for anything you need.
+
+Claude handles the fiddly parts — merging the hooks into your settings without breaking them, merging the operating rules into any CLAUDE.md you already have, adapting for your platform — and asks you for the values marked **CONFIGURE**.
+
+### The manual way
+
+```bash
 # 1. Commands — available immediately as /name
 cp commands/*.md ~/.claude/commands/
 
@@ -34,20 +47,21 @@ cp commands/*.md ~/.claude/commands/
 mkdir -p ~/.claude/hooks
 cp hooks/*.sh ~/.claude/hooks/
 chmod +x ~/.claude/hooks/*.sh
+```
 
-# 3. Wire the hooks up: merge the "hooks" block from settings.example.json
-#    into your ~/.claude/settings.json
+3. **Wire the hooks up.** If you have no `~/.claude/settings.json` yet: `cp settings.example.json ~/.claude/settings.json` and you're done. If you already have one, merge the `hooks` block from `settings.example.json` into it — and if hand-editing JSON isn't your thing, this is exactly what the easy way above is for. Notes: the `afplay` sound lines are macOS-only, delete them on Linux/Windows; installing `jq` (`brew install jq` on macOS, `apt install jq` on Linux) gets you cleaner context injection, but the hook works without it.
 
-# 4. Operating rules — read first, adapt, then merge into your own
+4. **Operating rules.** If you have no `~/.claude/CLAUDE.md` yet:
+
+```bash
 cp templates/CLAUDE.md ~/.claude/CLAUDE.md
 mkdir -p ~/.claude/rules
 cp templates/rules/writing-style.md ~/.claude/rules/
 ```
 
-Then configure two files (search for **CONFIGURE**):
+If you already have a CLAUDE.md, don't overwrite it — open both files and copy over the sections you want. Either way, read the "operating rules" section below first: the constitution is opinionated, and you'll want to know what you just signed up for.
 
-1. `~/.claude/commands/go.md` — set your projects root and any aliases
-2. `~/.claude/commands/style-review.md` — point it at your team's style guide (works with generic defaults until you do)
+5. **Configure two files** (search for **CONFIGURE**): `~/.claude/commands/go.md` (your projects root and aliases) and `~/.claude/commands/style-review.md` (your team's style guide; generic defaults work until then).
 
 Not ready for the full install? Start with three commands and nothing else:
 
@@ -97,7 +111,7 @@ See [docs/the-loop.md](docs/the-loop.md) for how the pieces connect and why.
 |---------|-------------|
 | `/anti-sloppifier` | Audits the session for AI slop, decision abdication, and thinking replacement. Scores your habits, saves a diary entry. The enforcement arm of the operating rules. |
 | `/sure` | Confidence check with a human checkpoint. Assesses work honestly, waits for your input, then improves and reassesses. |
-| `/ai-spend` | Audits your Claude Code token efficiency: fixed context overhead, MCP tool costs, cache hit rate, heavy skills. |
+| `/ai-spend` | Audits your Claude Code token efficiency: fixed context overhead, MCP tool costs, cache hit rate, heavy skills. Reads Claude Code's local state files, so it may need tweaks as Claude Code versions change. |
 
 ### The editorial roundtable
 
@@ -137,7 +151,7 @@ Fifteen reviewers for anything you write. Run them individually, or let the cond
 
 | Command | What it does |
 |---------|-------------|
-| `/feedback` (`/fb`) | Structured feedback database. Paste a quote, thread, or doc → validated entries in one markdown table. Query with `search`, `themes`, `user`, `recent`, `stats`. |
+| `/feedback` | Structured feedback database. Paste a quote, thread, or doc → validated entries in one markdown table. Query with `search`, `themes`, `user`, `recent`, `stats`. (Prefer typing `/fb`? Rename the file to `fb.md` — the filename is the command name.) |
 | `/call-notes` | Transcript in (pasted or file path), structured notes out: decisions, action items, open questions. Cross-links to the projects it mentions. |
 
 ### Content production
@@ -159,7 +173,7 @@ Three layers:
 2. **Taste & Judgment Development** — 5 rules for developing (not losing) editorial judgment while using AI: articulate why every time you steer, never accept the first structure, own the finishing pass.
 3. **Working preferences** — writing patterns to avoid, accuracy requirements (`[VERIFY]`/`[NEED]`/`[PLACEHOLDER]` markers), self-learning instructions.
 
-You don't need all of it. The rules work individually. Start with 3-4 that address your biggest pain point with AI, then add more as you notice new failure modes. `/anti-sloppifier` is the enforcement arm: it audits your sessions against these rules.
+**Fair warning: as shipped, it's maximal.** The "Mandatory" section makes Claude interview you (5+ questions) before any task with assumptions, and forbids generating docs from scratch. That's deliberate friction — it's the point of the setup — but if you adopt the whole file without reading it, you'll wonder why Claude suddenly answers everything with questions. You don't need all of it. The rules work individually. Start with 3-4 that address your biggest pain point with AI, then add more as you notice new failure modes. `/anti-sloppifier` is the enforcement arm: it audits your sessions against these rules.
 
 ## Optional integrations
 
@@ -171,7 +185,7 @@ None of the commands require MCP connectors — everything falls back to pasted 
 .
 ├── README.md               # You are here
 ├── AGENTS.md               # Instructions for AI agents installing this setup
-├── settings.example.json   # Hook wiring + conservative permissions
+├── settings.example.json   # Hook wiring + a minimal read-only allow-list
 ├── templates/
 │   ├── CLAUDE.md           # The operating rules (adapt, then adopt)
 │   └── rules/writing-style.md
