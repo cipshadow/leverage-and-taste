@@ -24,5 +24,4 @@ This repository is a **template library**, not a live workspace. The files in `t
 
 - `commands/` is flat and mirrors `~/.claude/commands/` 1:1 by design; `scripts/drift.sh` relies on this to diff a live setup against the repo.
 - The session system: `hooks/session-log-reader.sh` (SessionStart) walks up from the working directory to the nearest `SESSION_LOG.md` and injects its last entry plus any `.session-handoff.md`. `/ho` writes the structured entries. `hooks/session-handoff-writer.sh` (Stop) writes a minimal snapshot as a fallback. Each project directory owns its own `SESSION_LOG.md`; there is no cross-project catch-all.
-- `/every-review`, `/panel`, and `/debate` invoke the other reviewer commands by name; keep the set installed together.
 - `docs/sync.md` records which files were sanitized and how — consult it before proposing edits that re-introduce personal paths or employer-specific content.

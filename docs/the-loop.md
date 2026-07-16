@@ -44,7 +44,20 @@ claude                          # session starts in a project directory
 
 ## Conventions that make it work
 
-Honest adoption cost first: the loop assumes each project lives in its own directory (ideally all under one projects root, which is what `/go` scans). If your work is scattered across a desktop of loose files, adopting the loop means adopting that structure too.
+Honest adoption cost first: the loop assumes each project lives in its own directory (ideally all under one projects root, which is what `/go` scans). If your work is scattered across a desktop of loose files, adopting the loop means adopting that structure too. In practice it looks like this:
+
+```
+~/projects/
+├── health/
+│   ├── SESSION_LOG.md       # the diary
+│   ├── CONTEXT.md           # the profile
+│   └── ...
+├── fin-advice/
+│   ├── SESSION_LOG.md
+│   ├── CONTEXT.md
+│   └── ...
+└── ...
+```
 
 - **One `SESSION_LOG.md` per project directory**, at its root. No cross-project catch-all file; the SessionStart hook finds the right log by walking up from wherever you are.
 - **`CONTEXT.md` is optional but useful**: a per-project file with the stable facts (what the project is, key links, current goal, constraints). You create it once; `/go` reads it alongside the log, and `/ho` refreshes it when things change. The log is the diary, CONTEXT.md is the profile.

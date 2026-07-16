@@ -1,5 +1,5 @@
 ---
-name: prettier-slides
+name: pretty-slides
 description: "Create a polished HTML slide deck from a Google Doc, URL, pasted content, or existing HTML. Offers 6 visual styles from glassmorphism to immersive single-file decks with per-slide animation lifecycles."
 argument-hint: [Google Doc URL, web URL, file path, or paste content directly]
 user-invocable: true

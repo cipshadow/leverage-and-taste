@@ -21,7 +21,7 @@ What ships, what gets sanitized, what never ships. This is the contract; update 
 
 ### Ships as-is
 
-The 15 editorial roundtable commands (`asshole`, `mom`, `hemingway`, `hitchcock`, `sorkin`, `sedaris`, `vonnegut`, `eli5`, `dev-edit`, `line-edit`, `guardrails`, `debate`, `panel`, `every-review`*, `sure`), plus `anti-sloppifier`, `slackify`, `one-pager`, `tidy`*, `templates/rules/writing-style.md`, and both hook scripts.
+`sure`, `anti-sloppifier`, `slackify`, `one-pager`, `tidy`*, `templates/rules/writing-style.md`, and both hook scripts.
 (*one-line genericization applied; see below.)
 
 ### Ships sanitized
@@ -32,8 +32,7 @@ The 15 editorial roundtable commands (`asshole`, `mom`, `hemingway`, `hitchcock`
 | `ho.md` | Personal paths and the owner's name → generic |
 | `call-notes.md` | Personal paths → generic; meetings-connector fetch made optional |
 | `ai-spend.md` | Internal billing-tool references removed; context-file list genericized |
-| `prettier-slides.md` | Employer brand color and references → neutral accent |
-| `every-review.md` | Publication-specific references → generic; mechanics pass points at `/style-review` |
+| `pretty-slides.md` | Employer brand color and references → neutral accent |
 | `style-review.md` | Full rewrite of an employer-internal style reviewer: skeleton kept, rules replaced with generic defaults + CONFIGURE slots |
 | `tidy.md` | Personal example path → generic |
 | `feedback.md` | In-file command name normalized to `/feedback` (the live copy says `/fb`, but the filename is what defines the command) |
@@ -43,3 +42,5 @@ The 15 editorial roundtable commands (`asshole`, `mom`, `hemingway`, `hitchcock`
 ### Never ships
 
 `settings.local.json`, `diary.md`, `plans/`, `history.jsonl`, `sessions/`, `projects/`, any `SESSION_LOG.md` or `.session-handoff.md`, and `cv.md` (personal shortcut). Excluded by decision: `gdrive-scan.md`, `html-to-slides.md` (connector-dependent; the repo ships core-only), `BRAIN-EXTENSION-SETUP.md` (describes a system that was never built).
+
+**Third-party, not ours to publish:** Every's editorial reviewer skills (`every-review`, `panel`, `debate`, `dev-edit`, `line-edit`, `asshole`, `mom`, `hemingway`, `hitchcock`, `sorkin`, `sedaris`, `vonnegut`, `eli5`, `guardrails`) live in the author's setup but are Every's work — they stay out of this repo permanently.

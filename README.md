@@ -4,7 +4,7 @@ Automate the legwork, enhance your taste.
 
 ---
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for product managers and knowledge workers: 26 slash commands, an operating-rules "constitution", and a session-continuity system that makes the 50th conversation more useful than the first.
+A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for product managers and knowledge workers: 12 slash commands, an operating-rules "constitution", and a session-continuity system that makes the 50th conversation more useful than the first.
 
 Everything here is in daily use by its author — nothing aspirational, nothing invented for the repo. Assembled over months of real PM work (strategy docs, editorial reviews, meeting notes, feedback synthesis), drawing on Dan Shipper / Every's AI workflow principles and Claude Code community patterns.
 
@@ -71,12 +71,12 @@ cp commands/go.md commands/ho.md commands/anti-sloppifier.md ~/.claude/commands/
 
 ## Key concepts (if you're new to Claude Code)
 
-| Concept | What it means |
-|---------|--------------|
-| **Slash commands** | Reusable prompts you trigger with `/name` in Claude Code. Stored as markdown files in `~/.claude/commands/`. |
-| **CLAUDE.md** | A file Claude Code reads automatically at the start of every session. Put rules, preferences, and context here. Lives at `~/.claude/CLAUDE.md` (global) or `<project>/CLAUDE.md` (per-project). |
-| **Hooks** | Shell scripts Claude Code runs on events (session start, session stop). This setup uses two, for session continuity. |
-| **SESSION_LOG.md** | A markdown file where `/ho` writes what happened each session. Next time you `/go`, Claude reads it and picks up where you left off. |
+| Concept            | What it means                                                                                                                                                                                   |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Slash commands** | Reusable prompts you trigger with `/name` in Claude Code. Stored as markdown files in `~/.claude/commands/`.                                                                                    |
+| **CLAUDE.md**      | A file Claude Code reads automatically at the start of every session. Put rules, preferences, and context here. Lives at `~/.claude/CLAUDE.md` (global) or `<project>/CLAUDE.md` (per-project). |
+| **Hooks**          | Shell scripts Claude Code runs on events (session start, session stop). This setup uses two, for session continuity.                                                                            |
+| **SESSION_LOG.md** | A markdown file where `/ho` (stands for 'handoff') writes what happened each session. Next time you `/go`, Claude reads it and picks up where you left off.                                     |
 
 ## The loop
 
@@ -88,10 +88,25 @@ session starts  → hook injects your last handoff automatically
    do work
       ↓
 /anti-sloppifier → at checkpoints (~every 10 messages): audits the session
-      ↓             for AI slop, decision abdication, thinking replacement
+      ↓             for AI slop, decision outsourcing
 /ho             → session end: writes a structured SESSION_LOG entry
       ↓
 session stops   → hook auto-snapshots a .session-handoff.md as backup
+```
+
+The loop assumes each project owns a directory under one projects root. As a real example, the author's workspace is organized like this:
+
+```
+~/projects/
+├── health/                  # each project owns its own context
+│   ├── SESSION_LOG.md       # the diary: what happened, session by session
+│   ├── CONTEXT.md           # the profile: stable facts, links, current goal
+│   └── ...                  # the actual work files
+├── fin-advice/
+│   ├── SESSION_LOG.md
+│   ├── CONTEXT.md
+│   └── ...
+└── ...
 ```
 
 See [docs/the-loop.md](docs/the-loop.md) for how the pieces connect and why.
@@ -113,39 +128,13 @@ See [docs/the-loop.md](docs/the-loop.md) for how the pieces connect and why.
 | `/sure` | Confidence check with a human checkpoint. Assesses work honestly, waits for your input, then improves and reassesses. |
 | `/ai-spend` | Audits your Claude Code token efficiency: fixed context overhead, MCP tool costs, cache hit rate, heavy skills. Reads Claude Code's local state files, so it may need tweaks as Claude Code versions change. |
 
-### The editorial roundtable
-
-Fifteen reviewers for anything you write. Run them individually, or let the conductors sequence them.
-
-**Conductors:**
-
-| Command | What it does |
-|---------|-------------|
-| `/every-review` | Full editorial workflow. Diagnoses what stage your draft is at, sequences the right reviewers in the right order, hands off to `/style-review` for final mechanics. |
-| `/panel` | Convenes several reviewers at once, synthesizes their feedback into consensus findings and productive tensions. |
-| `/debate` | Reviewers argue with each other across rounds until tensions resolve or reach acknowledged stalemate. |
-
-**Craft reviewers:**
-
-| Command | Lens |
-|---------|------|
-| `/dev-edit` | Big picture: argument, structure, stakes, payoff |
-| `/line-edit` | Sentence- and word-level rigor |
-| `/asshole` | The meanest, least charitable read. Challenges every claim. |
-| `/mom` | Loving, supportive, not-quite-getting-it. Finds where you lost the general reader. |
-| `/hemingway` | Cuts ruthlessly. Every adjective and adverb must justify itself. |
-| `/hitchcock` | Suspense and tension. Where's the bomb under the table? |
-| `/sorkin` | Pacing and momentum. Is there forward motion? |
-| `/sedaris` | Finds the funny — moments minable for humor or self-deprecation. |
-| `/vonnegut` | Applies Vonnegut's 8 rules for writing. |
-| `/eli5` | Clarity check: jargon, hand-waving, skipped steps. |
-| `/guardrails` | Scans for recurring failure patterns and second-order AI tells. |
-
-**Mechanics:**
+### Writing review
 
 | Command | What it does |
 |---------|-------------|
 | `/style-review` | 4-pass review against a style guide: mechanical → consistency → voice/craft → paragraph/flow. Numbered table of fixes. Ships with generic defaults; point it at your team's guide. |
+
+This pairs well with Every's editorial reviewer skills (hemingway, dev-edit, panel, and friends) — an earlier version of this setup shipped alongside them. They're Every's work, so get them from Every rather than here.
 
 ### Knowledge and meetings
 
@@ -156,12 +145,12 @@ Fifteen reviewers for anything you write. Run them individually, or let the cond
 
 ### Content production
 
-| Command | What it does |
-|---------|-------------|
-| `/one-pager` | Create a product & engineering one-pager from a template, or review an existing one against a completeness rubric. |
-| `/prettier-slides` | Polished single-file HTML slide decks in 6 visual styles, from a doc, URL, or pasted content. |
-| `/slackify` | Makes text cleanly pastable into Slack (strips artificial line breaks, fixes formatting). |
-| `/tidy` | Points at a folder: renames vague files, finds duplicates and accidental secrets, proposes fixes, executes only on approval. |
+| Command            | What it does                                                                                                                 |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| `/one-pager`       | Create a product & engineering one-pager from a template, or review an existing one against a completeness rubric.           |
+| `/pretty-slides`   | Polished single-file HTML slide decks in 6 visual styles, from a doc, URL, or pasted content.                                |
+| `/slackify`        | Makes text cleanly pastable into Slack (strips artificial line breaks, fixes formatting).                                    |
+| `/tidy`            | Points at a folder: renames vague files, finds duplicates and accidental secrets, proposes fixes, executes only on approval. |
 
 ## The operating rules (templates/CLAUDE.md)
 
@@ -189,7 +178,7 @@ None of the commands require MCP connectors — everything falls back to pasted 
 ├── templates/
 │   ├── CLAUDE.md           # The operating rules (adapt, then adopt)
 │   └── rules/writing-style.md
-├── commands/               # 26 slash commands (flat, 1:1 with ~/.claude/commands/)
+├── commands/               # 12 slash commands (flat, 1:1 with ~/.claude/commands/)
 ├── hooks/
 │   ├── session-log-reader.sh    # SessionStart: injects last handoff as context
 │   └── session-handoff-writer.sh # Stop: auto-snapshots session state
@@ -207,7 +196,7 @@ None of the commands require MCP connectors — everything falls back to pasted 
 
 ## Credits and influences
 
-- Dan Shipper / Every — AI workflow principles (articulate before delegating, the slop test) and the editorial-personas idea
+- Dan Shipper / Every — AI workflow principles (articulate before delegating, the slop test). Their editorial reviewer skills lived in earlier versions of this setup; they're not republished here.
 - Claude Code community — session continuity approaches, command patterns
 
 ## License
