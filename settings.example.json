@@ -1,0 +1,53 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "WebSearch"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/session-log-reader.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay -v 0.5 /System/Library/Sounds/Submarine.aiff"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/session-handoff-writer.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay -v 0.5 /System/Library/Sounds/Blow.aiff"
+          }
+        ]
+      }
+    ]
+  },
+  "preferredNotifChannel": "terminal_bell"
+}
