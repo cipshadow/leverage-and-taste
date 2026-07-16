@@ -1,0 +1,5 @@
+.DS_Store
+SESSION_LOG.md
+.session-handoff.md
+settings.local.json
+*.canvas
