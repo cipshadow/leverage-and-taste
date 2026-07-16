@@ -215,4 +215,4 @@ Keep each entry under 10 lines. The diary is for pattern recognition over weeks,
 
 
 
-Do NOT run /handoff after this skill. /coach and /ho are independent — the user will run /ho separately if needed. The diary entry is the only persistent output of /coach.
+Do NOT run /ho after this skill. /anti-sloppifier and /ho are independent — the user will run /ho separately if needed. The diary entry is the only persistent output of /anti-sloppifier.

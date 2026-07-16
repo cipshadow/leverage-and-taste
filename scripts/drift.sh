@@ -47,6 +47,8 @@ for live_file in "$CLAUDE_DIR"/commands/*.md; do
   name="$(basename "$live_file")"
   case "$name" in
     internal-prose-review.md) continue ;;  # ships as style-review.md
+    # Excluded by decision — see "Never ships" in docs/sync.md
+    cv.md|gdrive-scan.md|html-to-slides.md|README.md|BRAIN-EXTENSION-SETUP.md) continue ;;
   esac
   if [ ! -f "$REPO_DIR/commands/$name" ]; then
     echo "UNDECIDED      $name (in live setup, not in repo — triage: include / sanitize / exclude)"
