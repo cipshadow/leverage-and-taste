@@ -15,7 +15,7 @@ ls /tmp/*.md /tmp/*.txt 2>/dev/null
 For any found, check if they contain session output. If so, offer to save to a permanent location.
 
 **2. Open loops**
-Review this session's conversation for any explicit "next steps", "TODO", "pending", or unresolved decisions. List them — they'll go into the Pending section of the log entry.
+Review this session's conversation for any explicit "next steps", "TODO", "pending", or unresolved decisions. List them; they'll go into the Pending section of the log entry.
 
 **Reporting rule:** If all checks are clean, say "Pre-flight clean." and move on. Do not list individual checks that passed. Only surface items requiring action.
 
@@ -27,13 +27,13 @@ Every real project directory owns its own `SESSION_LOG.md` at its root
 (e.g. `newsletter/SESSION_LOG.md`, `home-finance/SESSION_LOG.md`).
 This matches the SessionStart hook
 (`~/.claude/hooks/session-log-reader.sh`), which walks up from `$PWD` looking
-for the nearest `SESSION_LOG.md` — there is no cross-project catch-all file.
+for the nearest `SESSION_LOG.md`: there is no cross-project catch-all file.
 
 1. Walk up from the current working directory to find the nearest
    `SESSION_LOG.md`. If found, that's the log to update.
 2. If none exists yet for this project, create one at the project root
    (the same directory as its `.git/`, or the directory you were invoked
-   from if there's no repo) — see the format in Step 2 and use the same
+   from if there's no repo); see the format in Step 2 and use the same
    header pattern as any sibling project's `SESSION_LOG.md` for reference.
 
 If the session spanned multiple project directories, update each one's own
@@ -44,7 +44,7 @@ log with only the content relevant to that project.
 Append to the bottom of each relevant SESSION_LOG using this format:
 
 ```markdown
-### YYYY-MM-DD — [Short title summarizing the session]
+### YYYY-MM-DD: [Short title summarizing the session]
 
 **Goal:** [What this session set out to accomplish]
 
@@ -57,7 +57,7 @@ Append to the bottom of each relevant SESSION_LOG using this format:
 - [Only include if non-obvious decisions were made this session]
 
 **Pending:**
-- [Unfinished work, open loops, blocked items — omit section entirely if clean]
+- [Unfinished work, open loops, blocked items (omit section entirely if clean)]
 
 **Files involved:**
 - [Key files created or modified, with paths and links]
@@ -90,7 +90,7 @@ Tell the user in 2-3 lines max:
 
 ## Step 4: Run /anti-sloppifier
 
-After the handoff entry is written, run the `/anti-sloppifier` skill. Display its output in the chat, but do NOT save findings to the session log — they go to `~/.claude/diary.md` per the anti-sloppifier skill's own instructions.
+After the handoff entry is written, run the `/anti-sloppifier` skill. Display its output in the chat, but do NOT save findings to the session log: they go to `~/.claude/diary.md` per the anti-sloppifier skill's own instructions.
 
 ## Step 5: Done
 

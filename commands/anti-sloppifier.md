@@ -4,7 +4,7 @@ model: sonnet
 user-invocable: true
 ---
 
-# /anti-sloppifier — AI-Use Self-Audit for PM Work
+# /anti-sloppifier: AI-Use Self-Audit for PM Work
 
 ## Goal
 
@@ -59,14 +59,14 @@ Ignore analytics and stakeholder communications unless the user explicitly asks 
 4. Look for moments where AI may have made or over-shaped a decision.
 5. Check whether the user asked for assumptions, missing evidence, alternatives, risks, and counterarguments.
 6. Check whether outputs separated evidence from inference and speculation.
-7. **Apply the slop test to any docs produced:** For each substantial doc or section, ask the user directly: "Would you stand behind every line of this if challenged in a product review?" Quote 2-3 specific lines that look plausible but may lack real backing — where the user may have let AI say something they haven't personally validated. Flag these explicitly.
+7. **Apply the slop test to any docs produced:** For each substantial doc or section, ask the user directly: "Would you stand behind every line of this if challenged in a product review?" Quote 2-3 specific lines that look plausible but may lack real backing, where the user may have let AI say something they haven't personally validated. Flag these explicitly.
 8. Identify missed chances to use AI more effectively.
 9. Suggest better prompts and lightweight behavior changes.
 10. **Check the workflow discipline habits** (see below).
 
 ## Workflow discipline checks
 
-These are habits the user is building. Check whether they were practiced during the session. Only flag gaps — don't praise things that went well.
+These are habits the user is building. Check whether they were practiced during the session. Only flag gaps; don't praise things that went well.
 
 **10x filter:** Did the user delegate something that would have had 10x impact if done with full human attention? Or conversely, did the user spend time on something that should have been fully delegated? Flag the misjudgment.
 
@@ -86,11 +86,11 @@ These are habits the user is building. Check whether they were practiced during 
 
 **Thinking mode vs writing mode:** Did the user enter the session with a brief or open question that prompted AI to generate immediately? Or did the user first clarify their own thinking before asking for output? Flag sessions where AI was generating before the user had stated their own view.
 
-**Mining before drafting:** Before producing a document or synthesis, did the user (or AI) surface relevant prior context — past notes, prior conversations, existing analysis? Or did the session start from scratch when existing material was available? Flag cold-start drafting when prior context existed.
+**Mining before drafting:** Before producing a document or synthesis, did the user (or AI) surface relevant prior context (past notes, prior conversations, existing analysis)? Or did the session start from scratch when existing material was available? Flag cold-start drafting when prior context existed.
 
-**Finishing pass:** For any written output produced this session, did the user do a final pass to make it sound like them — or was AI's voice accepted as-is? Flag if the output was shared/filed without a distinct finishing touch.
+**Finishing pass:** For any written output produced this session, did the user do a final pass to make it sound like them, or was AI's voice accepted as-is? Flag if the output was shared/filed without a distinct finishing touch.
 
-**Articulation on steers:** When the user redirected AI output ("not that, more like this"), did they say why? Or was it just a vague rejection? Flag if steering happened without articulation — that's the taste-building exercise being skipped.
+**Articulation on steers:** When the user redirected AI output ("not that, more like this"), did they say why? Or was it just a vague rejection? Flag if steering happened without articulation: that's the taste-building exercise being skipped.
 
 **First structure accepted:** Did the user take the first outline, structure, or framing AI offered without reshaping it? Accepting the first structure means the user never found out what they actually wanted. Flag if it happened.
 
@@ -126,24 +126,24 @@ When risky or bad behavior appears, say so directly and suggest how to reclaim t
 
 **Two-track output:**
 
-1. **Chat output** — structured into the four sections below. Omit any section with nothing to say. Keep everything bullets; no prose paragraphs.
+1. **Chat output**: structured into the four sections below. Omit any section with nothing to say. Keep everything bullets; no prose paragraphs.
 
-2. **Diary entry** — full detail per the format below.
+2. **Diary entry**: full detail per the format below.
 
 **Chat sections:**
 
 **Better prompts**
-Show each weak prompt struck through, followed by → and a stronger rewrite. Only include prompts worth improving — skip ones that were already good.
+Show each weak prompt struck through, followed by → and a stronger rewrite. Only include prompts worth improving; skip ones that were already good.
 - ~~"old prompt"~~ → "Better version: state your position, ask for challenge, be specific about what you need"
 
 **Missed opportunities**
 Specific things that could have been done but weren't. Use **bold label:** format.
 - **Premortem:** could have asked "what could go wrong here for me specifically?"
-- **Red team the position:** the X claim is an assumption — could have asked me to find evidence for/against
+- **Red team the position:** the X claim is an assumption; could have asked me to find evidence for/against
 - **Stakeholder lens:** "what does [person] actually want from this meeting?" would have sharpened the prep
 
 **Coaching questions**
-2–4 questions to make the user think — things only they can answer. Not rhetorical. Specific to this session.
+2–4 questions to make the user think: things only they can answer. Not rhetorical. Specific to this session.
 1. Do you agree with [specific decision made]? What would change it?
 2. What's your worst-case outcome here? Have you named it?
 
@@ -189,22 +189,22 @@ Be a friendly coach, but no bullshit. Be specific and practical. Avoid performat
 
 ## After the review: Save diary entry
 
-After presenting the review to the user, append a diary entry to `~/.claude/diary.md` (a single running file across all repos — not one file per day). Add a dated section header (`## YYYY-MM-DD — [session topic]`) above the entry so multiple sessions stay distinguishable in the one file.
+After presenting the review to the user, append a diary entry to `~/.claude/diary.md` (a single running file across all repos, not one file per day). Add a dated section header (`## YYYY-MM-DD: [session topic]`) above the entry so multiple sessions stay distinguishable in the one file.
 
 If an entry for today already exists, append a new timestamped subsection (`### HH:MM`) under today's header rather than duplicating the day header.
 
 Diary entry format:
 
 ```markdown
-## YYYY-MM-DD — [session topic in 5 words or fewer]
+## YYYY-MM-DD: [session topic in 5 words or fewer]
 
 **Quick read:** [1-2 sentence assessment from above]
 
-**Key observation:** [The single most important pattern noticed — what to watch for next time]
+**Key observation:** [The single most important pattern noticed; what to watch for next time]
 
-**Decision agency:** [Clean / One flag / Multiple flags — with brief detail if flagged]
+**Decision agency:** [Clean / One flag / Multiple flags (with brief detail if flagged)]
 
-**Slop flag:** [None / Line quoted verbatim — the weakest line produced that the user may not fully own]
+**Slop flag:** [None / Line quoted verbatim: the weakest line produced that the user may not fully own]
 
 **Best prompt rewrite:** [The single best improved prompt from the session, quoted]
 
@@ -213,6 +213,36 @@ Diary entry format:
 
 Keep each entry under 10 lines. The diary is for pattern recognition over weeks, not session replay.
 
+## After the diary entry: Update the trends file
 
+Then update `~/.claude/diary-trends.md`, the long-term dashboard that turns episodic diary entries into analysable trends. If it doesn't exist, create it with the template below. Four updates, all terse:
 
-Do NOT run /ho after this skill. /anti-sloppifier and /ho are independent — the user will run /ho separately if needed. The diary entry is the only persistent output of /anti-sloppifier.
+1. **Running signals table:** match this session's decision-agency and slop flags against the existing signals. Same underlying behavior → increment its count, append the date, refresh the trend word (new / persistent / worsening / improving / dormant). Genuinely new behavior → add a row. Re-rank by count. Merge near-duplicate rows rather than letting variants accumulate. Keep the counter-signal line updated too: what the user is doing well and should keep doing.
+2. **Habit ledger:** check the most recent previously-prescribed "Habit to build" against this session: practiced, violated, or untested. Record it with the date. A habit practiced 3 sessions running is built; drop it from the ledger. Add this session's new habit.
+3. **Current month rollup:** update the audit count and decision-agency tally (clean / one-flag / multiple). Rewrite the "dominant pattern" / "improving" / "watch" lines only if the picture changed.
+4. **Month boundary:** on the first audit of a new month, freeze the previous month's section, add a 2-3 line month-in-review comparing it to the month before, and start the new month's rollup.
+
+Keep the whole file under ~80 lines. It's a dashboard, not a second diary: counts, dates, and one-line judgments, no session narrative.
+
+Template for first creation:
+
+```markdown
+# Diary Trends — long-term AI-use analysis
+
+Maintained by /anti-sloppifier. diary.md holds raw entries; this file holds patterns.
+
+## Running signals (all-time, ranked by recurrence)
+| # | Signal | Count | Seen | Trend |
+**Counter-signal (good, keep doing):** ...
+
+## Habit ledger
+| Habit (prescribed) | Status |
+
+## YYYY-MM (N audits)
+**Decision agency:** X clean / Y one-flag / Z multiple-flag.
+**Dominant pattern:** ...
+**Improving:** ...
+**Watch:** ...
+```
+
+Do NOT run /ho after this skill. /anti-sloppifier and /ho are independent; the user will run /ho separately if needed. The diary entry and trends update are the only persistent outputs of /anti-sloppifier.

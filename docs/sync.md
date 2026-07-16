@@ -4,16 +4,16 @@ This repo mirrors a live `~/.claude/` setup, minus everything personal. Sync is 
 
 ## The ritual
 
-1. Run `scripts/drift.sh` — it diffs each shipped file against its `~/.claude/` counterpart and lists what changed.
+1. Run `scripts/drift.sh`: it diffs each shipped file against its `~/.claude/` counterpart and lists what changed.
 2. For each drifted file, review the diff and re-apply that file's sanitize rules (table below) before copying it in.
-3. New files in `~/.claude/commands/` that aren't in the manifest are flagged as **undecided** — triage them: include, sanitize, or exclude.
+3. New files in `~/.claude/commands/` that aren't in the manifest are flagged as **undecided**; triage them: include, sanitize, or exclude.
 4. Before committing, run the leak check:
 
 ```bash
 grep -riE '<employer>|<internal-tool>|<brand-term>|/Users/[a-z]+' commands/ templates/ hooks/ docs/ README.md AGENTS.md
 ```
 
-Replace the placeholders with your actual employer name, internal tool names, brand terms, project names, and paths — keep the real list somewhere private, not in this file. Zero hits or no commit.
+Replace the placeholders with your actual employer name, internal tool names, brand terms, project names, and paths; keep the real list somewhere private, not in this file. Zero hits or no commit.
 
 ## The manifest
 
@@ -41,6 +41,6 @@ What ships, what gets sanitized, what never ships. This is the contract; update 
 
 ### Never ships
 
-`settings.local.json`, `diary.md`, `plans/`, `history.jsonl`, `sessions/`, `projects/`, any `SESSION_LOG.md` or `.session-handoff.md`, and `cv.md` (personal shortcut). Excluded by decision: `gdrive-scan.md`, `html-to-slides.md` (connector-dependent; the repo ships core-only), `BRAIN-EXTENSION-SETUP.md` (describes a system that was never built).
+`settings.local.json`, `diary.md`, `diary-trends.md`, `plans/`, `history.jsonl`, `sessions/`, `projects/`, any `SESSION_LOG.md` or `.session-handoff.md`, and `cv.md` (personal shortcut). Excluded by decision: `gdrive-scan.md`, `html-to-slides.md` (connector-dependent; the repo ships core-only), `BRAIN-EXTENSION-SETUP.md` (describes a system that was never built).
 
-**Third-party, not ours to publish:** Every's editorial reviewer skills (`every-review`, `panel`, `debate`, `dev-edit`, `line-edit`, `asshole`, `mom`, `hemingway`, `hitchcock`, `sorkin`, `sedaris`, `vonnegut`, `eli5`, `guardrails`) live in the author's setup but are Every's work — they stay out of this repo permanently.
+**Third-party, not ours to publish:** Every's editorial reviewer skills (`every-review`, `panel`, `debate`, `dev-edit`, `line-edit`, `asshole`, `mom`, `hemingway`, `hitchcock`, `sorkin`, `sedaris`, `vonnegut`, `eli5`, `guardrails`) live in the author's setup but are Every's work; they stay out of this repo permanently.

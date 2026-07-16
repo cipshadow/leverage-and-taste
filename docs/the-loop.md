@@ -4,23 +4,25 @@ Claude Code forgets everything between sessions. The session system in this repo
 
 ## The pieces
 
-**1. SessionStart hook — `hooks/session-log-reader.sh`**
+**1. SessionStart hook: `hooks/session-log-reader.sh`**
 
 When a session starts, this hook walks up from your working directory to the nearest `SESSION_LOG.md` and injects its most recent entry as context. It also injects `.session-handoff.md` if one exists. You start every session already caught up, without pasting anything.
 
 Uses `jq` if installed (for Claude Code's structured hook protocol); without it, falls back to plain-text output, which SessionStart hooks also inject.
 
-**2. `/ho` — the deliberate handoff**
+**2. `/ho`: the deliberate handoff**
 
 At session end, `/ho` runs a pre-flight check for loose ends (temp files worth saving, open TODOs), then appends a structured entry to the project's `SESSION_LOG.md`: goal, what was done, decisions with reasoning, pending items, and a "how to continue" instruction written for a fresh Claude instance. It finishes by chaining `/anti-sloppifier`.
 
-**3. Stop hook — `hooks/session-handoff-writer.sh`**
+**3. Stop hook: `hooks/session-handoff-writer.sh`**
 
 Claude Code fires the Stop event whenever Claude finishes responding, not just when you quit. Each time, this hook auto-writes a minimal `.session-handoff.md` snapshot (date, directory, git branch, recent commits, uncommitted changes), skipping if one was written in the last minute. It's the safety net for sessions that end without a `/ho`: you lose the narrative but keep the state.
 
-**4. `/anti-sloppifier` — the discipline audit**
+**4. `/anti-sloppifier`: the discipline audit**
 
-Runs at natural checkpoints (a decision made, a doc produced, roughly every 10 messages) and always as part of `/ho`. It audits the session against the operating rules in `templates/CLAUDE.md`: did AI anchor your thinking, did you abdicate a decision, did slop get through? Findings go to `~/.claude/diary.md`, deliberately separate from the session log — the log records *work done*, the diary records *how AI was used*.
+Runs at natural checkpoints (a decision made, a doc produced, roughly every 10 messages) and always as part of `/ho`. It audits the session against the operating rules in `templates/CLAUDE.md`: did AI anchor your thinking, did you abdicate a decision, did slop get through? Findings go to `~/.claude/diary.md`, deliberately separate from the session log: the log records *work done*, the diary records *how AI was used*.
+
+Each audit also rolls up into `~/.claude/diary-trends.md`, a long-term dashboard: recurring signals ranked by count, a ledger of prescribed habits and whether you actually practiced them, and monthly decision-agency tallies. The diary answers "what happened this session"; the trends file answers "what keeps happening" — which is where AI-use discipline is actually won or lost.
 
 ## The loop in practice
 

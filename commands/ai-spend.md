@@ -1,6 +1,6 @@
 ---
 name: ai-spend
-description: Audit Claude Code token efficiency — MCP overhead, session patterns, skill cost, cache hit rate. Add --full for actual dollar spend if you have billing data access.
+description: Audit Claude Code token efficiency: MCP overhead, session patterns, skill cost, cache hit rate. Add --full for actual dollar spend if you have billing data access.
 model: sonnet
 user-invocable: true
 ---
@@ -17,7 +17,7 @@ Audit Claude Code token spend and surface efficiency wins. Quantify everything i
 
 Run ALL of the following bash commands **in parallel**. Collect the outputs before synthesizing anything.
 
-### Bash 1: Stats-cache — model usage and daily activity
+### Bash 1: Stats-cache: model usage and daily activity
 ```bash
 python3 - << 'EOF'
 import json, os
@@ -28,7 +28,7 @@ with open(os.path.expanduser('~/.claude/stats-cache.json')) as f:
 
 # Model usage (lifetime totals)
 print("=== MODEL_USAGE ===")
-# CONFIGURE: per-MTok USD pricing. Update as models and prices change —
+# CONFIGURE: per-MTok USD pricing. Update as models and prices change;
 # check https://docs.anthropic.com/en/docs/about-claude/pricing
 pricing = {
     'claude-opus-4-6':       {'in': 15, 'out': 75, 'cr': 1.875, 'cc': 18.75},
@@ -48,7 +48,7 @@ for model, stats in d.get('modelUsage', {}).items():
     hit_rate = round(cr / max(cr + cc + i, 1) * 100, 1)
     print(f"  {model}: input={i:,} output={o:,} cache_read={cr:,} cache_create={cc:,} est_cost=${cost:.2f} cache_hit={hit_rate}%")
 
-# Daily activity — last 14 days
+# Daily activity: last 14 days
 print("\n=== DAILY_ACTIVITY (last 14 days) ===")
 da = d.get('dailyActivity', [])
 cutoff = (datetime.now() - timedelta(days=14)).strftime('%Y-%m-%d')
@@ -56,7 +56,7 @@ recent = [x for x in da if x.get('date','') >= cutoff]
 for r in recent[-14:]:
     print(f"  {r['date']}: sessions={r.get('sessionCount',0)} msgs={r.get('messageCount',0)} tools={r.get('toolCallCount',0)}")
 
-# Daily model tokens — last 14 days
+# Daily model tokens: last 14 days
 print("\n=== DAILY_MODEL_TOKENS (last 14 days) ===")
 dmt = d.get('dailyModelTokens', [])
 recent_t = [x for x in dmt if x.get('date','') >= cutoff]
@@ -70,7 +70,7 @@ print(f"  longestSession: {longest.get('messageCount',0)} messages")
 EOF
 ```
 
-### Bash 2: Setup overhead — MCP servers, context files, skill files
+### Bash 2: Setup overhead: MCP servers, context files, skill files
 ```bash
 python3 - << 'EOF'
 import json, os, glob
@@ -95,7 +95,7 @@ try:
     print(f"  enableAllProjectMcpServers: {all_proj}")
 except: print("  settings.local.json: error reading")
 
-# CONFIGURE: estimate tool count per MCP server — add your own servers
+# CONFIGURE: estimate tool count per MCP server; add your own servers
 # Format: 'server_name': estimated_tool_count
 server_tool_estimates = {
     # Add your MCP servers here, e.g.:
@@ -175,7 +175,7 @@ try:
 except Exception as e:
     print(f"  Error: {e}")
 
-# Recent session sampling — compute cache hit rate and turns from 5 most recent JSONL files
+# Recent session sampling: compute cache hit rate and turns from 5 most recent JSONL files
 print("\n=== RECENT_SESSIONS (5 most recent) ===")
 import glob
 
@@ -215,7 +215,7 @@ for fpath in files:
         fname = os.path.basename(fpath)[:8]
         print(f"  {fname}... {len(messages)} msgs | models: {models_used} | turns: {len(assistant_msgs)} | cache_hit: {hit_rate}% | est: ${est_cost:.3f}")
     except Exception as e:
-        print(f"  {os.path.basename(fpath)}: error — {e}")
+        print(f"  {os.path.basename(fpath)}: error: {e}")
 EOF
 ```
 
@@ -223,10 +223,10 @@ EOF
 
 ## Synthesis
 
-After collecting all outputs, produce this report. Fill in every `[X]` from the actual data. Do NOT present raw bash output — compute and summarize.
+After collecting all outputs, produce this report. Fill in every `[X]` from the actual data. Do NOT present raw bash output; compute and summarize.
 
 ```
-## AI Spend Audit — [today's date]
+## AI Spend Audit: [today's date]
 
 ### Token overhead per turn (what you pay before doing any actual work)
 
@@ -334,7 +334,7 @@ Add to the report:
 
 **Total:** $[X] | vs prior 30 days: $[Y] ([+/-Z]%)
 **Top model:** [model] ($[X], [N]%)
-**Highest day:** [date] ($[X]) — [N] sessions that day
+**Highest day:** [date] ($[X]), [N] sessions that day
 ```
 
 Then compare the local estimate from model usage stats against the actuals and note the delta.

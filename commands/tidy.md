@@ -135,6 +135,6 @@ If the folder doesn't have an INDEX.md or README.md, offer to create one. The IN
 - **Always propose before executing.** Never rename, delete, or move files without showing the plan first.
 - **Read before renaming.** Open every vague file to understand its content. Don't guess from the filename alone.
 - **Preserve meaningful names.** If a name already communicates what's inside, leave it alone.
-- **Don't touch active code.** Never rename source files (`.ts`, `.tsx`, `.py`, `.js`) inside a project's `src/` directory — those are referenced by imports.
+- **Don't touch active code.** Never rename source files (`.ts`, `.tsx`, `.py`, `.js`) inside a project's `src/` directory; those are referenced by imports.
 - **Be conservative with deletions.** Only delete files you can confirm are duplicates (by checksum) or regenerable (build artifacts with a manifest file present).
 - **Flag uncertainty.** If you can't determine what a file contains or where it belongs, add it to the "needs user input" list rather than guessing.

@@ -16,12 +16,12 @@ Before generating slides, present the available styles and ask the user to pick 
 
 > Which visual style do you want for this deck?
 >
-> 1. **Glassmorphism** — Animated floating orbs with frosted-glass cards. Premium and modern.
-> 2. **Particles** — Three.js particle background with mouse reactivity. Big slide numbers as design element.
-> 3. **White** — Clean light theme, horizontal slide navigation. Best for data-heavy content and printing.
-> 4. **Immersive** (default) — Full environmental deck: subtle grid, glow orbs, cursor-reactive glow, pill nav with progress ring, per-slide animation lifecycles. Zero dependencies. The flagship.
-> 5. **Dark** — Same engine as Immersive but noir palette: ember orange + cyan. Dramatic and high-contrast.
-> 6. **Midnight** — React + framer-motion + Vite. Beat system for progressive reveals. Spring physics. Requires build step.
+> 1. **Glassmorphism**: Animated floating orbs with frosted-glass cards. Premium and modern.
+> 2. **Particles**: Three.js particle background with mouse reactivity. Big slide numbers as design element.
+> 3. **White**: Clean light theme, horizontal slide navigation. Best for data-heavy content and printing.
+> 4. **Immersive** (default): Full environmental deck: subtle grid, glow orbs, cursor-reactive glow, pill nav with progress ring, per-slide animation lifecycles. Zero dependencies. The flagship.
+> 5. **Dark**: Same engine as Immersive but noir palette: ember orange + cyan. Dramatic and high-contrast.
+> 6. **Midnight**: React + framer-motion + Vite. Beat system for progressive reveals. Spring physics. Requires build step.
 >
 > Or I can generate **one demo slide in all 6 styles** so you can compare before committing.
 
@@ -211,7 +211,7 @@ border:    rgba(255,255,255,0.08)  (dark variants)
 - Font: system font stack (NO Google Fonts)
 - Slide titles: `clamp(32px, 4vw, 42px)`, 700 weight, #fff
 - Title slide: `clamp(40px, 5vw, 56px)`, 800 weight
-- Eyebrow / section labels (uppercase caps): `clamp(11px, 1vw, 13px)`, uppercase, letter-spacing 0.12em, dim colour — exception to the floor (decorative labels only)
+- Eyebrow / section labels (uppercase caps): `clamp(11px, 1vw, 13px)`, uppercase, letter-spacing 0.12em, dim colour (exception to the floor; decorative labels only)
 - Subtitles: `clamp(16px, 2vw, 20px)`, 0.95 opacity
 - Card titles: `clamp(16px, 2vw, 20px)`, 600 weight
 - Card body: `clamp(16px, 1.6vw, 20px)`, 0.95 opacity
@@ -222,14 +222,14 @@ border:    rgba(255,255,255,0.08)  (dark variants)
 
 ### Font size floor (non-negotiable)
 
-**Body text minimum is `16px`.** Any inline `font-size` on readable content must use `clamp(16px, 1.6vw, 20px)` or larger. The reference size is a subtitle like "A PM's working setup with Claude Code" — all body copy must be at least that size on screen.
+**Body text minimum is `16px`.** Any inline `font-size` on readable content must use `clamp(16px, 1.6vw, 20px)` or larger. The reference size is a subtitle like "A PM's working setup with Claude Code": all body copy must be at least that size on screen.
 
 Exceptions (UI chrome only, not readable content):
-- Eyebrow / section labels: `clamp(11px, 1vw, 13px)` — uppercase, muted, decorative
-- Monospace code in terminal/file-tree blocks: `clamp(13px, 1.3vw, 15px)` — code context
+- Eyebrow / section labels: `clamp(11px, 1vw, 13px)` (uppercase, muted, decorative)
+- Monospace code in terminal/file-tree blocks: `clamp(13px, 1.3vw, 15px)` (code context)
 - Nav bar, dots, counter, slide labels: fixed small sizes are fine (not content)
 
-**Never use `font-size` below 13px on any text the audience needs to read.** If content doesn't fit at 16px+, split the slide or trim the content — never shrink the font.
+**Never use `font-size` below 13px on any text the audience needs to read.** If content doesn't fit at 16px+, split the slide or trim the content; never shrink the font.
 
 ---
 
@@ -399,7 +399,7 @@ Three.js code in external `particles-bg.js`. 300 particles, additive blending, m
 All HTML styles should include these utility classes. Elements with class `anim` auto-animate on slide entrance via the MutationObserver in `slides.js`.
 
 ```css
-/* Staggered entrance delays — add class "anim" + "d1" through "d12" */
+/* Staggered entrance delays: add class "anim" + "d1" through "d12" */
 .anim {
   opacity: 0;
   transform: translateY(18px);
@@ -464,7 +464,7 @@ Horizontal slide navigation with light theme. Same arrow-key/dot/swipe navigatio
 
 ---
 
-## STYLE 4: Immersive (`immersive.html` — default)
+## STYLE 4: Immersive (`immersive.html`, default)
 
 Zero-dependency immersive deck. CSS-first animations with JS particle effects, squash-stretch physics, environmental atmosphere, and cursor-reactive glow. No libraries. **Reference:** provide your own immersive deck as a template for consistent styling.
 
@@ -474,8 +474,8 @@ Zero-dependency immersive deck. CSS-first animations with JS particle effects, s
 - **JS handles physics-based effects** (particle bursts, cursor glow tracking, procedural SVG, count-up numbers)
 - **Every slide has an environmental mood** (ambient particles, gradient shifts, subtle rain/glow, background glows)
 - **Transitions feel physical** (squash on exit, stretch on enter, directional momentum)
-- **MutationObserver drives per-slide lifecycle** — each slide's animation triggers on `.active` class add/remove, with clean reset when leaving
-- **Single HTML file** — everything inline (styles in `<style>`, JS in `<script>`), no build step, shareable as-is
+- **MutationObserver drives per-slide lifecycle**: each slide's animation triggers on `.active` class add/remove, with clean reset when leaving
+- **Single HTML file**: everything inline (styles in `<style>`, JS in `<script>`), no build step, shareable as-is
 
 ### Colour system
 
@@ -517,7 +517,7 @@ Use semantic color names with a full surface scale. The palette should feel aliv
 ### Font Stack
 
 ```css
-font-family: 'Outfit', sans-serif;  /* body — load from Google Fonts via <link> */
+font-family: 'Outfit', sans-serif;  /* body: load from Google Fonts via <link> */
 code, .mono { font-family: 'Space Mono', monospace; }
 ```
 
@@ -758,7 +758,7 @@ function celebrate(svg, cx, cy, count) {
 
 ### Advanced JS Patterns
 
-**MutationObserver per-slide lifecycle** (the core pattern — use for every slide with custom animation):
+**MutationObserver per-slide lifecycle** (the core pattern; use for every slide with custom animation):
 ```javascript
 (function() {
   var slide = document.getElementById('slide-N');
@@ -1019,7 +1019,7 @@ Cursor glow shifts to warm orange. Cards use deeper glass. Everything else (anim
 
 ---
 
-## STYLE 6: Midnight (`react/` — React + Framer Motion)
+## STYLE 6: Midnight (`react/`, React + Framer Motion)
 
 Premium variant with animated transitions, staggered reveals, and interactive charts. Requires Node.js.
 
@@ -1135,11 +1135,11 @@ Before deploying the React variant:
 
 ### Default flow
 
-1. **Ask which style** — present the style selection prompt from the top of this document. If the user says "demo" or "compare", generate a single HTML file with one slide in all 6 styles (tabbed), open it, and wait for their pick.
-2. **Read the source content** — Google Doc (use `get_google_drive_file`), URL (use WebFetch), pasted text, or an existing HTML/markdown file
-3. **Read a reference deck if provided** — if the user supplies an existing HTML deck, read it and match its component patterns and CSS variable structure exactly. If none is provided, build from the selected style's spec.
-3. **Extract the narrative arc** — title, stats, context, goals, structure, next steps
-4. **Map content to slide types** — one clear point per slide. Use these component patterns:
+1. **Ask which style**: present the style selection prompt from the top of this document. If the user says "demo" or "compare", generate a single HTML file with one slide in all 6 styles (tabbed), open it, and wait for their pick.
+2. **Read the source content**: Google Doc (use `get_google_drive_file`), URL (use WebFetch), pasted text, or an existing HTML/markdown file
+3. **Read a reference deck if provided**: if the user supplies an existing HTML deck, read it and match its component patterns and CSS variable structure exactly. If none is provided, build from the selected style's spec.
+3. **Extract the narrative arc**: title, stats, context, goals, structure, next steps
+4. **Map content to slide types**: one clear point per slide. Use these component patterns:
    - Stats/metrics → stat boxes with count-up animation
    - Definitions → grid of cards with `.def-term` / `.def-body`
    - Comparisons → styled-table with row cascade
@@ -1148,13 +1148,13 @@ Before deploying the React variant:
    - Categories → grid of cards with colored top borders + badges
    - Triggers/tags → `.trigger-pill` or `.tag` pills
    - Context banners → `.banner` with `.banner-tag` + `.banner-text`
-6. **Choose a colour palette** — Adapt the `:root` variables to the content's brand or the user's preference. If a reference deck was provided, extract its palette. Otherwise pick a palette that fits the subject matter (e.g. your company's brand color for internal decks, green for product launches, dark for technical deep-dives). Structure stays the same: bg, surfaces, 5 accents, text hierarchy.
-7. **Write a single HTML file** — All CSS in `<style>`, all JS in `<script>`. Include: bg-grid, bg-glow orbs per slide, animation classes, cursor glow, bottom bar with dots + progress ring, circular nav buttons, print stylesheet.
+6. **Choose a colour palette**: Adapt the `:root` variables to the content's brand or the user's preference. If a reference deck was provided, extract its palette. Otherwise pick a palette that fits the subject matter (e.g. your company's brand color for internal decks, green for product launches, dark for technical deep-dives). Structure stays the same: bg, surfaces, 5 accents, text hierarchy.
+7. **Write a single HTML file**: All CSS in `<style>`, all JS in `<script>`. Include: bg-grid, bg-glow orbs per slide, animation classes, cursor glow, bottom bar with dots + progress ring, circular nav buttons, print stylesheet.
 8. **Add per-slide JS animations** using MutationObserver pattern for any slide with:
    - Count-up numbers → `requestAnimationFrame` + cubic ease-out
    - Table rows → cascade with `translateX(-16px)` stagger
    - Flow diagrams → phased SVG reveal with connection flow animation
-9. **Build slide by slide** — This is the most important step. Do NOT write all slides in one pass. For each slide:
+9. **Build slide by slide**: This is the most important step. Do NOT write all slides in one pass. For each slide:
    - Write the full HTML for that slide (`.slide` div with bg-grid, bg-glow, slide-inner, content)
    - Check: does every text element have an animation class (`au`/`al`/`ar`/`af`/`as`) with a stagger delay (`d1`-`d12`)?
    - Check: are font sizes using `clamp()` and will they fit at 1280x800?
@@ -1164,7 +1164,7 @@ Before deploying the React variant:
    - Check: do coloured elements (labels, badges, card borders, stat values) use the accent variables, not raw hex?
    - Add any per-slide JS (count-up, table cascade, SVG animation) as a self-contained MutationObserver IIFE or `cascadeRows()` call
    - Only then move to the next slide
-10. **Assemble the full file** — Combine: `<style>` block, all slides in `<div class="deck">`, cursor glow div, nav buttons, bottom bar, `<script>` block with navigation + cursor glow + per-slide animations
+10. **Assemble the full file**: Combine: `<style>` block, all slides in `<div class="deck">`, cursor glow div, nav buttons, bottom bar, `<script>` block with navigation + cursor glow + per-slide animations
 11. **Write file** to project directory under `slides/` or the current directory
 12. **Open in browser:** `open [path-to-file]`
 12a. **Ask: push to Google Slides?**
@@ -1178,8 +1178,8 @@ If yes, run the pipeline below. If no, continue to the QA pass.
 ### Google Slides pipeline
 
 **Prerequisites** (install in your slides directory):
-- `node_modules/puppeteer` — `npm install puppeteer` if missing
-- `python-pptx` — `pip3 install python-pptx` if missing
+- `node_modules/puppeteer`: `npm install puppeteer` if missing
+- `python-pptx`: `pip3 install python-pptx` if missing
 
 **Step 1: Copy the HTML and any referenced JS to the slides directory**
 
@@ -1224,7 +1224,7 @@ This uploads to your configured Drive folder and converts the PPTX to a native G
 
 **Report back:** Google Slides URL + slide count.
 
-13. **Run the QA pass** — Review the complete deck checking:
+13. **Run the QA pass**: Review the complete deck checking:
     - **Consistent spacing:** padding, gaps, and margins are uniform across all slides (no slide feels cramped or loose compared to others)
     - **Projector contrast:** text colours have enough contrast against the dark background to survive a washed-out projector. Avoid `var(--text-muted)` for anything the audience needs to read. Body text should be `var(--text-secondary)` minimum. Key stats and titles use `var(--text-primary)` or accent colours.
     - **Animation speed:** all entrance animations are 0.4s or under. The `.slide` transition is 0.35s. Count-up durations (1-1.4s) are the only exception. No animation should feel sluggish.
@@ -1242,7 +1242,7 @@ When generating bar charts, use this pattern to ensure bars render at correct he
 .bar { width: 100%; border-radius: 4px 4px 0 0; }
 ```
 
-Critical: `.bar-group` MUST have `height: 100%` and `justify-content: flex-end` — without this, percentage heights on `.bar` elements won't render (they need an explicitly-sized parent).
+Critical: `.bar-group` MUST have `height: 100%` and `justify-content: flex-end`. Without this, percentage heights on `.bar` elements won't render (they need an explicitly-sized parent).
 
 ### Reusable JS helper: `cascadeRows`
 
@@ -1270,21 +1270,21 @@ Generate a single HTML file with one representative slide rendered in all 6 styl
 
 ### Immersive (default)
 - Single self-contained HTML file (inline `<style>` + `<script>`)
-- Google Fonts via `<link>` (Outfit + Space Mono) — fallback to system stack for CSP
+- Google Fonts via `<link>` (Outfit + Space Mono); fallback to system stack for CSP
 - Every slide has `.bg-grid` + 1-3 `.bg-glow` orbs
 - Every content element has an animation class (`au`/`al`/`ar`/`af`/`as`) with delay (`d1`-`d12`)
 - Font sizes use `clamp()` for responsive scaling
 - Navigation dots dynamically generated in JS
-- **Hash deep links work** — `#3` goes to slide 3 on load
+- **Hash deep links work**: `#3` goes to slide 3 on load
 - **Animations replay** on slide entrance via MutationObserver lifecycle
-- **Print stylesheet included** — shows all slides, disables animations, proper page breaks
+- **Print stylesheet included**: shows all slides, disables animations, proper page breaks
 - **Cursor glow** tracks mouse with lerp (disabled on touch devices)
 - **Progress ring** updates on every slide change
 - **Bottom bar** shows: slide label, pill dots, counter, branding, progress ring
 
 ### Multi-file styles (Glassmorphism, Particles, White)
-- NO inline scripts — all JS in external files
-- NO Google Fonts — system font stack only
+- NO inline scripts: all JS in external files
+- NO Google Fonts: system font stack only
 - NO external CDN references unless downloaded locally
 
 ---

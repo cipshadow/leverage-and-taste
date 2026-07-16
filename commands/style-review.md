@@ -10,9 +10,9 @@ Review content against your team's style guide and output a numbered table of co
 ## Input
 
 The user will provide content in one of three ways:
-1. **Pasted text** — review it directly
-2. **A doc URL or ID** — fetch it with whatever document connector is available
-3. **A file path** — read the file
+1. **Pasted text**: review it directly
+2. **A doc URL or ID**: fetch it with whatever document connector is available
+3. **A file path**: read the file
 
 If no content is provided, ask which doc to review.
 
@@ -25,7 +25,7 @@ Run a four-pass review:
 Scan for violations of these rules. Flag every instance.
 
 **Spelling & terminology:**
-- Pick one spelling convention (default: American — analyze, optimize, color) and enforce it throughout
+- Pick one spelling convention (default: American: analyze, optimize, color) and enforce it throughout
 - **CONFIGURE:** add your organization's terminology rules here (product-name casing, banned abbreviations, words to avoid)
 
 **Numbers:**
@@ -41,7 +41,7 @@ Scan for violations of these rules. Flag every instance.
 - Always present metrics as trajectory: baseline > target (growth rate). Never a number without context.
 - Pair percentages with absolute numbers.
 - Growth rates use specific timeframes: "35% YoY," "39% MoM." Never "growing quickly."
-- If you see "significant," "many," or "meaningful" — flag it and ask for a number.
+- If you see "significant," "many," or "meaningful," flag it and ask for a number.
 
 **Punctuation:**
 - Oxford comma always: x, y, and z
@@ -55,10 +55,10 @@ Scan for violations of these rules. Flag every instance.
 
 **Formatting:**
 - Sentence case for everything (NOT title case), except book/publication titles
-- Don't use bold for emphasis — recast the sentence. Bold marks structural elements (priority names, section leads).
-- Don't use italics for emphasis — recast the sentence. Italics mark user voice, caveats, or publication titles.
+- Don't use bold for emphasis; recast the sentence. Bold marks structural elements (priority names, section leads).
+- Don't use italics for emphasis; recast the sentence. Italics mark user voice, caveats, or publication titles.
 - Date format: October 15, 2018 (no ordinals: not "October 15th")
-- Abbreviations: no periods (US, EU, UK — not U.S., E.U.)
+- Abbreviations: no periods (US, EU, UK, not U.S., E.U.)
 - Tables only for genuinely columnar data. Don't use tables for prose.
 
 **Links:**
@@ -127,8 +127,8 @@ Re-read each paragraph checking against the patterns below. Only flag issues tha
 - No filler: "actually", "very", "just", "basically", "essentially."
 - No throat-clearing: "It's important to note that...", "I'd be happy to..."
 - No filler transitions: "Turning now to," "Another important area is." Sections begin directly.
-- Avoid starting sentences with "This" — be specific about the referent.
-- Avoid "in order to" — just use "to."
+- Avoid starting sentences with "This": be specific about the referent.
+- Avoid "in order to": just use "to."
 - Active voice for your organization's actions, always. "We will launch," never "will be launched."
 - Companies are singular: "Acme released its..." not "their."
 - Lowercase job titles unless directly preceding a name.
@@ -195,12 +195,12 @@ After the sentence-level pass, re-read the doc as a reader would, focusing on pa
 - Fix: suggest a direct statement that makes the same point without the borrowed phrasing.
 
 **Infinitive-after-colon awkwardness:**
-- Flag constructions like "a principle: to run infrastructure that..." — the infinitive after a colon reads awkwardly.
+- Flag constructions like "a principle: to run infrastructure that..." (the infinitive after a colon reads awkwardly).
 - Fix: recast as "a principle: infrastructure that..." (state the thing, not the act of doing the thing).
 
 **Table subject/voice consistency across tables:**
 - Flag when different tables in the same doc use different subject patterns. E.g. one wins table uses third person ("The new onboarding flow reaches...") while another uses first person ("We launched saved searches...").
-- Fix: suggest standardizing to "We [past tense]" across all wins tables — the strongest pattern in exemplary strategy docs.
+- Fix: suggest standardizing to "We [past tense]" across all wins tables, the strongest pattern in exemplary strategy docs.
 
 **Duplicate words from editing:**
 - Flag obvious editing artifacts: "We shipped the new search ships for Sessions" (duplicate "ships"), stray linebreaks mid-sentence, double spaces.

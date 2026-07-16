@@ -4,7 +4,7 @@ argument-hint: <paste feedback, URL, or subcommand: search/themes/user/recent/st
 user-invocable: true
 ---
 
-# /feedback — User Feedback Extraction & Storage
+# /feedback: User Feedback Extraction & Storage
 
 Extract user or customer feedback into a structured markdown database, or query existing entries.
 
@@ -51,7 +51,7 @@ Found [N] feedback signal(s):
 - Company: [name]
 - User: [person name/handle if known]
 - Date: [when the feedback was originally given]
-- Area: [product area — infer from content]
+- Area: [product area, infer from content]
 - Severity: [blocker | major | minor | nice-to-have]
 - Sentiment: [positive | negative | neutral | mixed]
 - Verbatim: "[exact quote if available]"

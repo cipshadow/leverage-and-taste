@@ -14,7 +14,7 @@ description: Turn a call transcript into structured notes. Paste transcript text
 Extract structured notes from the transcript using this template:
 
 ```
-# [Meeting Title] — [YYYY-MM-DD]
+# [Meeting Title]: [YYYY-MM-DD]
 
 **Attendees:** [names mentioned or identified from speaker labels]
 **Duration:** [estimated from timestamps, or state "unknown"]
@@ -61,18 +61,18 @@ Create the directory if it doesn't exist.
 
 A meeting can relate to **multiple projects**. Auto-detect relevant projects
 by matching the meeting content against real project directory names under
-your projects root (`ls <projects root>`, same approach as the `/go` skill —
+your projects root (`ls <projects root>`, same approach as the `/go` skill;
 see `/go` for the **CONFIGURE** projects-root setting).
 
 For **each matched project**, append a one-line reference to
 `<projects root>/<project>/MEETINGS.md`:
 
 ```
-- [YYYY-MM-DD — Meeting Title](~/.claude/meetings/YYYY-MM-DD-slugified-title.md): one-line summary
+- [YYYY-MM-DD: Meeting Title](~/.claude/meetings/YYYY-MM-DD-slugified-title.md): one-line summary
 ```
 
 Use the absolute `~/.claude/meetings/...` path in the link, not a relative
-one — meetings and projects no longer share a common parent directory.
+one; meetings and projects no longer share a common parent directory.
 Create `MEETINGS.md` in the project folder if it doesn't exist.
 
 ## File format
@@ -84,7 +84,7 @@ Each meeting file contains BOTH the structured notes AND the raw transcript in a
 
 ## Transcript
 
-[Full verbatim transcript — no editing, no summarizing, preserve all timestamps and speaker labels]
+[Full verbatim transcript: no editing, no summarizing, preserve all timestamps and speaker labels]
 ```
 
 One file = summary at top, raw transcript at bottom.
@@ -92,7 +92,7 @@ One file = summary at top, raw transcript at bottom.
 ## Output
 
 1. Show the notes to the user for review.
-2. State which projects were detected (no need to ask — auto-detect from content).
+2. State which projects were detected (no need to ask; auto-detect from content).
 3. Save the combined file (notes + transcript) to `~/.claude/meetings/`.
 4. Update each matched project's `MEETINGS.md`.
 5. Confirm saved path and which `MEETINGS.md` files were updated.

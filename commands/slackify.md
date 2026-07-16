@@ -11,7 +11,7 @@ Accept one of:
 
 ## Rules
 
-1. **Unwrap paragraphs.** Join lines that were split mid-sentence by terminal column width. A line that ends without a period, colon, or list marker and is followed by a line that starts lowercase or continues a sentence — join them.
+1. **Unwrap paragraphs.** Join lines that were split mid-sentence by terminal column width. A line that ends without a period, colon, or list marker and is followed by a line that starts lowercase or continues a sentence: join them.
 
 2. **Preserve intentional breaks:**
    - Blank lines between paragraphs → keep as single blank line

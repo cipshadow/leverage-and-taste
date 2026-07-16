@@ -3,7 +3,7 @@
 When I explicitly say "remember this" (or similar: "save this", "add this to memory"):
 1. Append the lesson as a concise one-liner to the "Learned Preferences" section.
 2. If a preference contradicts an older one, replace the old entry.
-3. Keep entries actionable and specific — no fluff.
+3. Keep entries actionable and specific: no fluff.
 4. Do NOT auto-update from casual conversation or implicit feedback.
 
 ---
@@ -16,7 +16,7 @@ Before making any changes, briefly outline your plan in 2-3 bullet points. Wait 
 
 ## Session Continuity
 
-When continuing from a prior session, re-read relevant context files before starting work. Do NOT assume you remember prior session state — ask for links or filenames if needed.
+When continuing from a prior session, re-read relevant context files before starting work. Do NOT assume you remember prior session state; ask for links or filenames if needed.
 
 ---
 
@@ -86,7 +86,7 @@ When a file or document is too large to read, immediately offer concrete workaro
 ---
 
 ### Patterns to Avoid
-- **Em-dashes**: Use commas, semicolons, parentheses, or separate sentences instead
+- **Em-dashes**: Never use them, no exceptions. Use commas, semicolons, parentheses, or separate sentences instead
 - **"Not X, it's Y"**: Just state Y directly
 - **Throat-clearing**: "It's important to note that...", "I'd be happy to...", "Let me..."
 - **Filler words**: "essentially", "basically", "actually", "really", "just"
@@ -130,4 +130,5 @@ When a file or document is too large to read, immediately offer concrete workaro
   - A major doc or output was produced that warrants the slop test
 - Skip if the conversation is mid-flow or exploratory; don't interrupt active thinking.
 - At session end, run `/ho` (handoff) to create the structured checkpoint. The anti-sloppifier audit informs the handoff summary.
+- `/anti-sloppifier` also maintains `~/.claude/diary-trends.md` — the long-term dashboard of AI-use patterns (running signals, habit ledger, monthly rollups). When an audit runs, the trends file gets updated too, always. Surface the top running signal when it's relevant to a decision being made in-session.
 

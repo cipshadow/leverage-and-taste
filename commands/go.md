@@ -23,7 +23,7 @@ aliases that don't match a directory name directly.
 
 ## Steps
 
-### 1. If no argument provided — interactive picker
+### 1. If no argument provided: interactive picker
 
 **Step 1a:** Use `AskUserQuestion` with one question:
 
@@ -37,12 +37,12 @@ After both questions, treat the final selection (or typed answer) as `$ARGUMENTS
 
 **The argument may contain a project name followed by a task description** (e.g. `"newsletter can you check the draft formatting"`). Extract the project name by trying progressively shorter prefixes until a match is found.
 
-**Matching order — first match wins:**
+**Matching order (first match wins):**
 
-1. **Alias table** — try the full argument, then each leading word/hyphen-token, against the Name/Alias column (case-insensitive)
-2. **Projects-root scan** — run `ls <projects root>` and find any subdirectory whose name matches any leading token of the argument (case-insensitive, partial prefix OK if unambiguous).
+1. **Alias table**: try the full argument, then each leading word/hyphen-token, against the Name/Alias column (case-insensitive)
+2. **Projects-root scan**: run `ls <projects root>` and find any subdirectory whose name matches any leading token of the argument (case-insensitive, partial prefix OK if unambiguous).
 
-When a match is found, note the matched project name and treat the **remaining argument text** (after the project name token) as the initial task context — carry it forward into the "What are we working on?" prompt.
+When a match is found, note the matched project name and treat the **remaining argument text** (after the project name token) as the initial task context; carry it forward into the "What are we working on?" prompt.
 
 If nothing matches after both checks, suggest the closest directory name and ask the user to confirm.
 

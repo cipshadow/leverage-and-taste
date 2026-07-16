@@ -6,7 +6,7 @@ globs: "*.md"
 # Writing Style
 
 ## Patterns to Avoid
-- **Em-dashes**: Use commas, semicolons, parentheses, or separate sentences instead
+- **Em-dashes**: Never use them, no exceptions. Use commas, semicolons, parentheses, or separate sentences instead
 - **"Not X, it's Y"**: Just state Y directly
 - **Throat-clearing**: "It's important to note that...", "I'd be happy to...", "Let me..."
 - **Filler words**: "essentially", "basically", "actually", "really", "just"
