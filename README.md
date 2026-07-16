@@ -4,9 +4,9 @@ Automate the legwork, enhance your taste.
 
 ---
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for product managers and knowledge workers. Slash commands, operating rules, and a knowledge base architecture that compounds over time.
+A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for product managers and knowledge workers: 26 slash commands, an operating-rules "constitution", and a session-continuity system that makes the 50th conversation more useful than the first.
 
-Assembled over months of daily use, drawing on open-source work from others (Dan Shipper's AI workflow principles, various Claude Code community patterns) and refined through real PM work: strategy docs, competitive research, contribution tracking, meeting notes, and domain knowledge bases.
+Everything here is in daily use by its author — nothing aspirational, nothing invented for the repo. Assembled over months of real PM work (strategy docs, editorial reviews, meeting notes, feedback synthesis), drawing on Dan Shipper / Every's AI workflow principles and Claude Code community patterns.
 
 Copy what's useful, ignore what isn't. MIT licensed.
 
@@ -16,293 +16,185 @@ Your taste — the judgment about what to cut, what to push on, what's actually 
 
 This setup does two things:
 
-1. **Frees up your time** by automating repetitive knowledge work (weekly recaps, feedback extraction, doc reviews, meeting notes, competitive research).
-2. **Keeps you sharp** with 16 operating rules that prevent you from going passive — accepting the first draft, skipping the hard thinking, letting AI make choices you should be making.
+1. **Frees up your time** by automating repetitive knowledge work (session handoffs, feedback extraction, doc reviews, meeting notes).
+2. **Keeps you sharp** with 22 operating rules — and an auditor command that checks whether you're following them — so you don't go passive: accepting the first draft, skipping the hard thinking, letting AI make choices you should be making.
 
-The session system (`/go` + `/ho`) solves a practical problem: Claude forgets everything between sessions. These commands make context persist so the 50th conversation is more useful than the first.
+## Quick start (5 minutes)
 
-## Prerequisites
+Prerequisites: Claude Code installed, `git`, and `jq` (used by one hook: `brew install jq`).
 
-- **Claude Code** installed and working (the [CLI tool from Anthropic](https://docs.anthropic.com/en/docs/claude-code))
-- **Git** (for cloning; also used by `/ho` to check for uncommitted work)
-- Basic familiarity with Claude Code (you've used it at least a few times)
+```bash
+git clone https://github.com/cipshadow/leverage-and-taste.git
+cd leverage-and-taste
+
+# 1. Commands — available immediately as /name
+cp commands/*.md ~/.claude/commands/
+
+# 2. Session-continuity hooks
+mkdir -p ~/.claude/hooks
+cp hooks/*.sh ~/.claude/hooks/
+chmod +x ~/.claude/hooks/*.sh
+
+# 3. Wire the hooks up: merge the "hooks" block from settings.example.json
+#    into your ~/.claude/settings.json
+
+# 4. Operating rules — read first, adapt, then merge into your own
+cp templates/CLAUDE.md ~/.claude/CLAUDE.md
+mkdir -p ~/.claude/rules
+cp templates/rules/writing-style.md ~/.claude/rules/
+```
+
+Then configure two files (search for **CONFIGURE**):
+
+1. `~/.claude/commands/go.md` — set your projects root and any aliases
+2. `~/.claude/commands/style-review.md` — point it at your team's style guide (works with generic defaults until you do)
+
+Not ready for the full install? Start with three commands and nothing else:
+
+```bash
+cp commands/go.md commands/ho.md commands/anti-sloppifier.md ~/.claude/commands/
+```
 
 ## Key concepts (if you're new to Claude Code)
 
 | Concept | What it means |
 |---------|--------------|
 | **Slash commands** | Reusable prompts you trigger with `/name` in Claude Code. Stored as markdown files in `~/.claude/commands/`. |
-| **CLAUDE.md** | A file Claude Code reads automatically at the start of every session. Put rules, preferences, and context here. Lives at `~/.claude/CLAUDE.md` (global) or `<project>/.claude/CLAUDE.md` (per-project). |
-| **MCP** | Model Context Protocol — a way to connect Claude Code to external tools (calendar, Slack, Google Drive, etc). Optional; commands work without it. |
+| **CLAUDE.md** | A file Claude Code reads automatically at the start of every session. Put rules, preferences, and context here. Lives at `~/.claude/CLAUDE.md` (global) or `<project>/CLAUDE.md` (per-project). |
+| **Hooks** | Shell scripts Claude Code runs on events (session start, session stop). This setup uses two, for session continuity. |
 | **SESSION_LOG.md** | A markdown file where `/ho` writes what happened each session. Next time you `/go`, Claude reads it and picks up where you left off. |
 
-## How to integrate into your workflow
+## The loop
 
-### Option A: Copy individual commands (recommended start)
+The core of this setup is a working loop, not a pile of commands:
 
-Pick 2-3 commands that solve an immediate problem:
-
-```bash
-# Copy just the ones you want
-cp commands/ho.md ~/.claude/commands/
-cp commands/go.md ~/.claude/commands/
-cp commands/style-review.md ~/.claude/commands/
+```
+session starts  → hook injects your last handoff automatically
+      ↓
+   do work
+      ↓
+/anti-sloppifier → at checkpoints (~every 10 messages): audits the session
+      ↓             for AI slop, decision abdication, thinking replacement
+/ho             → session end: writes a structured SESSION_LOG entry
+      ↓
+session stops   → hook auto-snapshots a .session-handoff.md as backup
 ```
 
-They're immediately available as `/ho`, `/go`, `/style-review` in Claude Code.
-
-### Option B: Full installation
-
-```bash
-git clone https://github.com/cipshadow/leverage-and-taste.git
-cd leverage-and-taste
-
-# Copy all commands
-cp commands/*.md ~/.claude/commands/
-
-# Copy operating rules (read first, adapt to your style)
-cp CLAUDE.md ~/.claude/CLAUDE.md
-```
-
-**After copying:**
-
-1. **Configure `/go`** — open `~/.claude/commands/go.md` and replace the example project table with your own projects and paths.
-2. **Create a `SESSION_LOG.md`** in your workspace root. `/ho` appends to it; `/go` reads from it. That's all you need.
-
-### Option C: Just read the operating rules
-
-The `CLAUDE.md` file contains 16 rules for working with AI effectively. Read it, adapt what resonates, paste relevant bits into your own `~/.claude/CLAUDE.md`. The rules work whether or not you use any of the commands.
+See [docs/the-loop.md](docs/the-loop.md) for how the pieces connect and why.
 
 ## The commands
 
-### `/go` and `/ho` (handoff) — session pair
-
-These two work together. `/go` starts a session by loading project context. `/ho` (short for "handoff") ends it by saving what happened.
-
-```
-/go myproject    → reads SESSION_LOG.md + CONTEXT.md, you're caught up
-  ... do work ...
-/ho              → checks for loose ends, writes session entry, runs /coach
-```
-
-That's the core loop. `/ho` writes what happened; next time you `/go`, Claude knows where you left off without you explaining.
-
-**First time?** Create a `SESSION_LOG.md` in your workspace. Run `/ho` at the end of a session. Done — the compounding starts.
-
-### Session and thinking quality
+### Session continuity
 
 | Command | What it does |
 |---------|-------------|
-| `/go <project>` | Load a project's full context (session log + CONTEXT.md) in one step. |
-| `/ho` | End session: pre-flight checks, writes SESSION_LOG entry, triggers /coach. |
-| `/coach` | AI-use self-audit. Did AI shape your decisions or support them? Saves a diary entry to `diary/`. |
-| `/sure` | Spawns a fresh sub-agent to review your work cold. Rates confidence 0-100, suggests fixes. Waits for your input before acting. |
+| `/go <project>` | Switch to a project and load its full context (last SESSION_LOG entry + CONTEXT.md) in one step. |
+| `/ho` | End session: pre-flight checks for loose ends, writes a structured SESSION_LOG entry, chains `/anti-sloppifier`. |
 
-<details>
-<summary><strong>Example: what /coach output looks like</strong></summary>
-
-```markdown
-## 2026-06-07 — Pricing strategy session
-
-**Decision agency: 8/10**
-You drove the framing and rejected the first structure. Good.
-
-**Missed opportunity:**
-You accepted the "three pillars" framing without articulating why three
-(vs. two or four). Next time: state your preferred structure before asking
-for alternatives.
-
-**Best moment:**
-"No, the user pain goes first, not the market opportunity." — clear taste
-signal that improved the doc.
-
-**Pattern to watch:**
-You're letting AI write transitions between sections without reviewing them.
-These often sound generic. Own the connective tissue.
-```
-</details>
-
-### Knowledge and research
+### AI discipline
 
 | Command | What it does |
 |---------|-------------|
-| `/wiki` | Personal knowledge base. Feed it sources → it maintains structured pages. Query it → get synthesized answers with citations. Four ops: `ingest` (add a source), `query` (ask a question), `lint` (find gaps/contradictions), `explore` (discover connections). |
-| `/feedback` | Structured feedback database. Paste a quote, a Slack thread, or a doc → extracts structured entries. Query with `/feedback search`, `/feedback themes`, `/feedback stats`. |
-| `/call-notes` | Paste a transcript (or pick from Zoom/Granola/a file), get structured notes with decisions, action items, and attendees. Saves to `meetings/`. |
-| `/competitor-analysis` | Give it a product area and competitors. It searches the web in parallel, builds a feature matrix, cross-references sources, and flags confidence levels. |
+| `/anti-sloppifier` | Audits the session for AI slop, decision abdication, and thinking replacement. Scores your habits, saves a diary entry. The enforcement arm of the operating rules. |
+| `/sure` | Confidence check with a human checkpoint. Assesses work honestly, waits for your input, then improves and reassesses. |
+| `/ai-spend` | Audits your Claude Code token efficiency: fixed context overhead, MCP tool costs, cache hit rate, heavy skills. |
 
-<details>
-<summary><strong>Example: what /my-week output looks like</strong></summary>
+### The editorial roundtable
 
-```markdown
-## Jun 3 — Jun 7
+Fifteen reviewers for anything you write. Run them individually, or let the conductors sequence them.
 
-### Summary
-- Finalized the pricing strategy doc and shared with leadership
-- Ran 3 user interviews on the new onboarding flow
-- Shipped the feature flag for progressive disclosure (merged PR #412)
-- Wrote competitor analysis for [Competitor X] pricing changes
-
-### Contributions log
-
-#### Pricing Strategy
-- **Meetings:** Strategy review (Wed; Alex, Sam, Jordan)
-- **Docs:** Pricing Strategy v2 (link)
-- **Local writing:** context/pricing-strategy.md — rewrote positioning section
-
-#### By the Numbers
-- 4 local files created/updated
-- 7 commits across 2 repos
-- 6 meetings attended
-- 5 Claude Code sessions · ~4 hrs saved
-```
-</details>
-
-### Productivity pipeline
+**Conductors:**
 
 | Command | What it does |
 |---------|-------------|
-| `/my-week` | Scans calendar, git, files, sessions. Presents findings for your validation (never saves without approval). Saves to WORK_LOG.md. |
-| `/my-month` | Reads WORK_LOG.md, deduplicates, synthesizes into outcome-focused monthly contributions. |
+| `/every-review` | Full editorial workflow. Diagnoses what stage your draft is at, sequences the right reviewers in the right order, hands off to `/style-review` for final mechanics. |
+| `/panel` | Convenes several reviewers at once, synthesizes their feedback into consensus findings and productive tensions. |
+| `/debate` | Reviewers argue with each other across rounds until tensions resolve or reach acknowledged stalemate. |
 
-These form a pipeline: `/my-week` (weekly raw data) → `/my-month` (monthly aggregate). Useful for performance reviews, 1:1 prep, or just remembering what you did.
+**Craft reviewers:**
 
-### Writing and presentation
+| Command | Lens |
+|---------|------|
+| `/dev-edit` | Big picture: argument, structure, stakes, payoff |
+| `/line-edit` | Sentence- and word-level rigor |
+| `/asshole` | The meanest, least charitable read. Challenges every claim. |
+| `/mom` | Loving, supportive, not-quite-getting-it. Finds where you lost the general reader. |
+| `/hemingway` | Cuts ruthlessly. Every adjective and adverb must justify itself. |
+| `/hitchcock` | Suspense and tension. Where's the bomb under the table? |
+| `/sorkin` | Pacing and momentum. Is there forward motion? |
+| `/sedaris` | Finds the funny — moments minable for humor or self-deprecation. |
+| `/vonnegut` | Applies Vonnegut's 8 rules for writing. |
+| `/eli5` | Clarity check: jargon, hand-waving, skipped steps. |
+| `/guardrails` | Scans for recurring failure patterns and second-order AI tells. |
+
+**Mechanics:**
 
 | Command | What it does |
 |---------|-------------|
-| `/style-review` | Paste text, a file path, or a doc URL. Gets a 4-pass review: mechanical (spelling/numbers) → consistency → voice/craft → paragraph/flow. Outputs a numbered table of fixes. |
-| `/one-pager` | Create a product brief from a structured template (problem, users, solution, metrics, rollout), or review an existing brief against a completeness rubric. |
-| `/html-slides` | Describe your content and pick a visual style (glassmorphism, dark, immersive, etc). Generates a polished HTML slide deck you can open in any browser. |
-| `/tidy` | Point it at a folder. It scans for naming issues, duplicates, bloat, accidental secrets. Proposes fixes, only executes on your approval. |
+| `/style-review` | 4-pass review against a style guide: mechanical → consistency → voice/craft → paragraph/flow. Numbered table of fixes. Ships with generic defaults; point it at your team's guide. |
 
-#### `/html-slides` style examples
+### Knowledge and meetings
 
-Same data, three different styles — generated from a single prompt:
+| Command | What it does |
+|---------|-------------|
+| `/feedback` (`/fb`) | Structured feedback database. Paste a quote, thread, or doc → validated entries in one markdown table. Query with `search`, `themes`, `user`, `recent`, `stats`. |
+| `/call-notes` | Transcript in (pasted or file path), structured notes out: decisions, action items, open questions. Cross-links to the projects it mentions. |
 
-| White | Immersive | Dark |
-|-------|-----------|------|
-| ![White style](demos/white-screenshot.png) | ![Immersive style](demos/immersive-screenshot.png) | ![Dark style](demos/dark-screenshot.png) |
+### Content production
 
-Each is a single self-contained HTML file. No build step, no dependencies. Open in any browser.
+| Command | What it does |
+|---------|-------------|
+| `/one-pager` | Create a product & engineering one-pager from a template, or review an existing one against a completeness rubric. |
+| `/prettier-slides` | Polished single-file HTML slide decks in 6 visual styles, from a doc, URL, or pasted content. |
+| `/slackify` | Makes text cleanly pastable into Slack (strips artificial line breaks, fixes formatting). |
+| `/tidy` | Points at a folder: renames vague files, finds duplicates and accidental secrets, proposes fixes, executes only on approval. |
 
-## The operating rules (CLAUDE.md)
+## The operating rules (templates/CLAUDE.md)
 
-The `CLAUDE.md` file is the "constitution" for how Claude behaves in your sessions. Claude Code reads it automatically at session start. Everything in it applies to every conversation without you having to repeat it.
+The constitution for how Claude behaves in your sessions. Claude Code reads it automatically at session start, so everything in it applies to every conversation without repeating yourself.
 
-### How to add these to your setup
+Three layers:
 
-```bash
-# Option 1: Use this file as your CLAUDE.md (if you don't have one yet)
-cp CLAUDE.md ~/.claude/CLAUDE.md
+1. **AI-Use Discipline** — 22 principles for staying in the driver's seat. State your view first, the slop test, evidence vs. inference labels, the 10x delegation filter, proactive naivety checks, and more.
+2. **Taste & Judgment Development** — 5 rules for developing (not losing) editorial judgment while using AI: articulate why every time you steer, never accept the first structure, own the finishing pass.
+3. **Working preferences** — writing patterns to avoid, accuracy requirements (`[VERIFY]`/`[NEED]`/`[PLACEHOLDER]` markers), self-learning instructions.
 
-# Option 2: Merge specific sections into your existing CLAUDE.md
-# Open both files and copy the sections that resonate
-```
+You don't need all of it. The rules work individually. Start with 3-4 that address your biggest pain point with AI, then add more as you notice new failure modes. `/anti-sloppifier` is the enforcement arm: it audits your sessions against these rules.
 
-The file contains three layers:
-1. **Operating rules** — 16 principles for AI collaboration (the taste-preservation layer)
-2. **Working preferences** — how you like responses formatted, accuracy requirements, source hierarchy
-3. **Session protocol** — how session logs route and when to checkpoint progress
+## Optional integrations
 
-You don't need all of it. The rules work individually. Start with 3-4 that address your biggest pain point with AI, then add more as you notice new failure modes.
-
-### The 16 rules (summary)
-
-1. **State your view first** — never let AI anchor your thinking
-2. **The slop test** — would you stand behind every line if challenged?
-3. **Separate evidence from inference** — label what's known vs. guessed
-4. **What would change this decision?** — stress-test conviction
-5. **Never answer "what should I do?"** — AI offers options, you choose
-6. **Challenge before polish** — surface problems before producing prose
-7. **Broaden frames** — "why might you be wrong?" over "why are you right?"
-8. **Own decisions explicitly** — don't let choices slide past unclaimed
-9. **Delegate production, collaborate on judgment** — AI does formatting; you do taste
-10. **Defend your argument** — no softened disagreement; force cited evidence
-11. **Root-cause mistakes** — fix the prompt/context, not just the output
-12. **Protect your understanding** — verify you absorbed insights before filing them
-13. **The 10x filter** — if you were 10x better at this, would it matter? If yes, don't delegate
-14. **Plans are compute allocation** — 80% clarity, 20% execution
-15. **Complexity earns its keep** — start janky, polish only after confirmed use
-16. **Skills self-improve** — fix a pattern once, update the skill so it never recurs
-
-Read the full `CLAUDE.md` for the detailed version of each rule with examples.
-
-## Session continuity
-
-The basic loop is just the two commands:
-
-```
-/ho    → writes what happened to SESSION_LOG.md
-/go    → reads SESSION_LOG.md, loads your last session's context automatically
-```
-
-`/go` reads the session log itself — that's its entire point. You don't need anything else for context to carry over between sessions.
-
-## The knowledge base system
-
-A personal knowledge base maintained by AI, curated by you. You feed it sources (docs, transcripts, articles); it maintains structured pages with cross-references. You query it; it synthesizes answers with citations.
-
-Key features:
-- **Confidence tags:** `[V]` verified, `[H]` high, `[M]` medium, `[L]` low, `[?]` unverified
-- **Contradiction handling:** flags both values with dates; never silently overwrites
-- **Source-drift detection:** checks if ingested sources have been updated
-- **Cross-references:** Obsidian-style `[[wikilinks]]` between pages
-- **Four operations:** ingest (add knowledge), query (ask questions), lint (find gaps), explore (discover connections)
-
-See `knowledge-base-schema/CLAUDE.md` for the full architecture. Drop it into a `wiki/` folder in your project and configure the sections for your domain.
-
-## MCP integrations (optional)
-
-[MCP (Model Context Protocol)](https://modelcontextprotocol.io/) lets Claude Code connect to external tools. Several commands work better with MCP servers, but none require them. No MCP? Commands fall back to asking you to paste content directly.
-
-| Capability | Example providers | Used by |
-|---|---|---|
-| Calendar | Google Calendar MCP | `/my-week` |
-| Transcripts | Zoom MCP, Granola, local files | `/call-notes` |
-| Documents | Google Drive MCP, Notion MCP | `/feedback`, `/style-review` |
-| Chat threads | Slack MCP, Discord MCP | `/feedback` |
-| Web search | Brave Search MCP, Tavily MCP | `/competitor-analysis` |
+None of the commands require MCP connectors — everything falls back to pasted text or local files. If you have connectors set up, some commands use them: `/feedback` can fetch Slack threads and docs, `/call-notes` can pull transcripts from a meetings tool, `/style-review` can fetch and edit cloud docs.
 
 ## File structure
 
 ```
 .
-├── CLAUDE.md              # Operating rules (the "constitution")
-├── settings.json          # Reference settings (permissions, modes)
-├── commands/              # 14 slash commands
-│   ├── go.md             # /go — Start session, load project context
-│   ├── ho.md             # /ho — End session, save handoff
-│   ├── coach.md          # /coach — AI-use self-audit
-│   ├── sure.md           # /sure — Confidence calibration
-│   ├── feedback.md       # /feedback — Feedback database
-│   ├── call-notes.md     # /call-notes — Transcript → structured notes
-│   ├── competitor-analysis.md
-│   ├── my-week.md        # /my-week — Weekly recap
-│   ├── my-month.md       # /my-month — Monthly contributions
-│   ├── style-review.md   # /style-review — 4-pass doc review
-│   ├── one-pager.md      # /one-pager — Product brief
-│   ├── html-slides.md    # /html-slides — Slide deck generator
-│   ├── tidy.md           # /tidy — Folder hygiene
-│   └── wiki-system.md    # /wiki — Knowledge base
-├── knowledge-base-schema/
-│   └── CLAUDE.md          # Knowledge base architecture template
-└── architecture/
-    └── system-design.md   # How all pieces connect
+├── README.md               # You are here
+├── AGENTS.md               # Instructions for AI agents installing this setup
+├── settings.example.json   # Hook wiring + conservative permissions
+├── templates/
+│   ├── CLAUDE.md           # The operating rules (adapt, then adopt)
+│   └── rules/writing-style.md
+├── commands/               # 26 slash commands (flat, 1:1 with ~/.claude/commands/)
+├── hooks/
+│   ├── session-log-reader.sh    # SessionStart: injects last handoff as context
+│   └── session-handoff-writer.sh # Stop: auto-snapshots session state
+├── docs/
+│   ├── the-loop.md         # How the session system connects
+│   └── sync.md             # How this repo stays in sync with a live setup
+└── scripts/drift.sh        # Diff your live ~/.claude against this repo
 ```
 
 ## Adapting for your use
 
-- **`/go`** — edit the project table to map your own project names and paths
-- **`knowledge-base-schema/CLAUDE.md`** — configure sections for your domain (e.g., replace "concepts/products/market" with whatever categories fit your work)
-- **`CLAUDE.md`** — merge rules into your existing `~/.claude/CLAUDE.md`, or use as-is
-- All commands are self-contained markdown files; edit them freely
+- Files marked **CONFIGURE** need your values before use: `go.md` (projects root), `style-review.md` (style guide), `ai-spend.md` (your MCP servers and context files).
+- All commands are self-contained markdown files; edit them freely.
+- Per the constitution's own rule 17: when a command gets something wrong, fix the command file, not just the output. The setup should compound.
 
 ## Credits and influences
 
-- Dan Shipper / Every — AI workflow principles (articulate before delegating, the slop test)
+- Dan Shipper / Every — AI workflow principles (articulate before delegating, the slop test) and the editorial-personas idea
 - Claude Code community — session continuity approaches, command patterns
-- Various open-source Claude Code setups on GitHub — command structure conventions
 
 ## License
 
