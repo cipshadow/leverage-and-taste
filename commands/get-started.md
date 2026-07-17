@@ -22,8 +22,9 @@ allowed-tools: Read, AskUserQuestion, Bash
 
 1. **Session continuity.** A `SessionStart` hook injects your last handoff
    automatically; a `Stop` hook snapshots session state as a backup. `/go`
-   loads a project's full context in one step; `/ho` writes a structured
-   handoff at the end. See `docs/the-loop.md` for the full loop.
+   loads a project's full context in one step; `/ho` ("ho" for "handoff")
+   writes a structured handoff at the end. See `docs/the-loop.md` for the
+   full loop.
 2. **The operating rules** (`templates/CLAUDE.md`). 22 AI-use discipline
    principles, 5 taste-and-judgment rules, and working preferences (writing
    style, accuracy markers). Claude Code reads this automatically every
@@ -39,7 +40,7 @@ allowed-tools: Read, AskUserQuestion, Bash
 |---|---|---|
 | Getting started | `/get-started` | This tour. |
 | Session continuity | `/go <project>` | Switch to a project, load its full context in one step. |
-| Session continuity | `/ho` | End session: pre-flight checks, structured handoff entry, chains `/anti-sloppifier`. |
+| Session continuity | `/ho` (short for "handoff") | End session: pre-flight checks, structured handoff entry, chains `/anti-sloppifier`. |
 | AI discipline | `/anti-sloppifier` | Audits the session for AI slop, decision abdication, thinking replacement. |
 | AI discipline | `/sure` | Confidence check with a human checkpoint before and after improving work. |
 | AI discipline | `/ai-spend` | Audits Claude Code token efficiency: context overhead, MCP costs, cache hit rate. |
