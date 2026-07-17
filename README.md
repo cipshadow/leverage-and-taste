@@ -203,8 +203,7 @@ None of the commands require MCP connectors; everything falls back to pasted tex
 
 ## Credits and influences
 
-- Dan Shipper / Every: AI workflow principles (articulate before delegating, the slop test). Their editorial reviewer skills lived in earlier versions of this setup; they're not republished here.
-- Claude Code community: session continuity approaches, command patterns
+- Thanks to the Claude Code community and to Every.to/Dan Shipper for his content and inspiration over the years!
 
 ## License
 
