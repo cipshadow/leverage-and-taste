@@ -4,7 +4,7 @@ Automate the legwork, enhance your taste.
 
 ---
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for product managers and knowledge workers: 13 slash commands, an operating-rules "constitution", and a session-continuity system that makes the 50th conversation more useful than the first.
+A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for product managers and knowledge workers: 14 slash commands, an operating-rules "constitution", and a session-continuity system that makes the 50th conversation more useful than the first.
 
 Everything here is in daily use by its author: nothing aspirational, nothing invented for the repo. Assembled over months of real PM work (strategy docs, editorial reviews, meeting notes, feedback synthesis), drawing on Dan Shipper / Every's AI workflow principles and Claude Code community patterns.
 
@@ -35,7 +35,7 @@ claude
 
 > Install this setup for me, following AGENTS.md. Ask me for anything you need.
 
-Claude handles the fiddly parts (merging the hooks into your settings without breaking them, merging the operating rules into any CLAUDE.md you already have, adapting for your platform) and asks you for the values marked **CONFIGURE**.
+Claude handles the fiddly parts (merging the hooks into your settings without breaking them, merging the operating rules into any CLAUDE.md you already have, adapting for your platform) and asks you for the values marked **CONFIGURE**. Once it's done, run `/get-started` for a two-minute guided tour of the three layers and all 14 commands, ending with an offer to try one live.
 
 ### The manual way
 
@@ -113,6 +113,12 @@ See [docs/the-loop.md](docs/the-loop.md) for how the pieces connect and why.
 
 ## The commands
 
+### Getting started
+
+| Command | What it does |
+|---------|-------------|
+| `/get-started` | Two-minute guided tour: the three layers, all 14 commands, ends with an offer to try one live. Run once right after installing. |
+
 ### Session continuity
 
 | Command | What it does |
@@ -179,7 +185,7 @@ None of the commands require MCP connectors; everything falls back to pasted tex
 ├── templates/
 │   ├── CLAUDE.md           # The operating rules (adapt, then adopt)
 │   └── rules/writing-style.md
-├── commands/               # 12 slash commands (flat, 1:1 with ~/.claude/commands/)
+├── commands/               # 14 slash commands (flat, 1:1 with ~/.claude/commands/)
 ├── hooks/
 │   ├── session-log-reader.sh    # SessionStart: injects last handoff as context
 │   └── session-handoff-writer.sh # Stop: auto-snapshots session state
