@@ -3,3 +3,4 @@ SESSION_LOG.md
 .session-handoff.md
 settings.local.json
 *.canvas
+.claude/
